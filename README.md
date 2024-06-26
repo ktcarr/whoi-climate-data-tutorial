@@ -5,6 +5,12 @@
 - external forcing vs. internal variability
 - intermodel spread vs. internal variability
 - confidence intervals?
+- removing trend/seasonal cycle
+- apply ufunc
+- chunking?
+- regridding
+- area-weighted mean
+- first section on 'reducing' data? (could have CDO as well)
 
 ## General outline
 
@@ -70,3 +76,9 @@
 ## Other topic ideas
 - Emergent constraints (e.g., current AMOC strength vs. change, surface T vs. P, surface winds vs. GS strength)
 - EOFs (too complicated?)
+
+# To run on Climex:
+- ```. ~/mamba.sh```
+- ```mamba activate ./envs```
+- ```jupyter lab --no-browser```
+- (on laptop) ```ssh -N -f -L localhost:8889:localhost:8888 kcarr@climex.whoi.edu```
