@@ -1,4 +1,6 @@
 envs
+data
 notes.md
 .ipynb_checkpoints
 *egg-info
+__pycache__
