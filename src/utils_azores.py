@@ -87,6 +87,12 @@ def count_extremes(AHA, cutoff_perc=90.0, window=25):
     return rolling_count
 
 
-def count_extremes_wrapper(slp, slp_global_avg, norm_type="detrend"):
-    """wrapper function which takes in SLP and computes # of Azores High extremes"""
-    return count_extremes(compute_AHA(slp, slp_global_avg, norm_type=norm_type))
+def count_extremes_wrapper(slp_data, norm_type="detrend"):
+    """wrapper function which takes in SLP dataset and computes # of Azores High extremes.
+    Assumes dataset 'slp_data' contains pre-computed global mean"""
+
+    ## extract global mean
+    slp_trim = slp_data["slp"]
+    slp_global_avg = slp_data["slp_global_avg"]
+
+    return count_extremes(compute_AHA(slp_trim, slp_global_avg, norm_type=norm_type))
