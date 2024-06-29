@@ -6,14 +6,14 @@ import src.utils
 def trim_to_north_atlantic(data):
     """convenience function to trim data north atlantic domain"""
 
-    return data.sel(longitude=slice(-70, 15), latitude=slice(0, 70))
+    return data.sel(lon=slice(-70, 15), lat=slice(0, 70))
 
 
 def trim_to_azores(data):
     """convenience function to trim data to Azores lon/lat range."""
 
-    return data.sel(longitude=slice(-60, 10), latitude=slice(10, 52))
-    # return data.sel(longitude=slice(-65, 15), latitude=slice(15, 65))
+    return data.sel(lon=slice(-60, 10), lat=slice(10, 52))
+    # return data.sel(lon=slice(-65, 15), lat=slice(15, 65))
 
 
 def compute_AHA(slp, slp_global_avg, norm_type="global_mean"):

@@ -1,5 +1,5 @@
 envs
-data
+data*
 notes.md
 .ipynb_checkpoints
 *egg-info

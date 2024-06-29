@@ -69,19 +69,28 @@ def convert_longitude(longitude):
     return longitude
 
 
-def update_longitude_coord(data):
+def switch_longitude_range(data):
     """move longitude for dataset or dataarray from [0,360)
     to (-180, 180]. Function accepts xr.dataset/xr.dataarray
     and returns object of same type"""
 
     ## get updated longitude coordinate
-    updated_longitude = convert_longitude(data.longitude.values)
+    updated_longitude = convert_longitude(data.lon.values)
 
     ## sort updated coordinate to be increasing
     updated_longitude = np.sort(updated_longitude)
 
     ## sort data ("reindex") according to update coordinate
-    data = data.reindex({"longitude": updated_longitude})
+    data = data.reindex({"lon": updated_longitude})
+
+    return data
+
+def reverse_latitude(data):
+    """ Change direction of latitude from [-90,90] to [90,-90]
+    or vice versa"""
+
+    lat_reversed = data.lat.values[::-1]
+    data = data.reindex({"lat":lat_reversed})
 
     return data
 
@@ -145,7 +154,7 @@ def standardize_lonlat(
 
     ## change longitude from range [0,360) to (-180, 180]
     if update_longitude:
-        data = update_longitude_coord(data)
+        data = switch_longitude_range(data)
 
     ## switch direction of latitude so that it's increasing
     if reverse_latitude:
@@ -163,16 +172,16 @@ def spatial_avg(data, lon_range=[None, None], lat_range=[None, None]):
     ## get latitude-dependent weights
     # first, convert latitude from degrees to radians
     # conversion factor = (2 pi radians)/(360 degrees)
-    latitude_radians = data.latitude * (2 * np.pi) / 360
+    latitude_radians = data.lat * (2 * np.pi) / 360
     cos_lat = np.cos(latitude_radians)
 
-    ## Next, trim data to specified range
-    data_trim = data.sel(longitude=slice(*lon_range), latitude=slice(*lat_range))
-    cos_lat_trim = cos_lat.sel(latitude=slice(*lat_range))
+    ## Next, trim data to specified range 
+    data_trim = data.sel(lon=slice(*lon_range), lat=slice(*lat_range)) 
+    cos_lat_trim = cos_lat.sel(lat=slice(*lat_range))
 
     ## Next, compute weighted avg
     data_weighted = data_trim.weighted(weights=cos_lat_trim)
-    data_avg = data_weighted.mean(["latitude", "longitude"])
+    data_avg = data_weighted.mean(["lat", "lon"])
 
     return data_avg
 
@@ -183,8 +192,8 @@ def spatial_int(data, lon_range=[None, None], lat_range=[None, None]):
 
     ## Get latitude/longitude in radians.
     ## denote (lon,lat) in radians as (theta, phi)
-    theta = data.longitude * RAD_PER_DEG
-    phi = data.latitude * RAD_PER_DEG
+    theta = data.lon * RAD_PER_DEG
+    phi = data.lat * RAD_PER_DEG
 
     ## get differences for integration (assumes constant differences)
     dtheta = theta[1] - theta[0]
@@ -198,7 +207,7 @@ def spatial_int(data, lon_range=[None, None], lat_range=[None, None]):
     dA = R**2 * np.cos(phi) * dphi * dtheta
 
     ## Integrate
-    data_int = (data * dA).sum(["latitude", "longitude"])
+    data_int = (data * dA).sum(["lat", "lon"])
 
     return data_int
 
