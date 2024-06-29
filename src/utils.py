@@ -85,12 +85,13 @@ def switch_longitude_range(data):
 
     return data
 
+
 def reverse_latitude(data):
-    """ Change direction of latitude from [-90,90] to [90,-90]
+    """Change direction of latitude from [-90,90] to [90,-90]
     or vice versa"""
 
     lat_reversed = data.lat.values[::-1]
-    data = data.reindex({"lat":lat_reversed})
+    data = data.reindex({"lat": lat_reversed})
 
     return data
 
@@ -175,8 +176,8 @@ def spatial_avg(data, lon_range=[None, None], lat_range=[None, None]):
     latitude_radians = data.lat * (2 * np.pi) / 360
     cos_lat = np.cos(latitude_radians)
 
-    ## Next, trim data to specified range 
-    data_trim = data.sel(lon=slice(*lon_range), lat=slice(*lat_range)) 
+    ## Next, trim data to specified range
+    data_trim = data.sel(lon=slice(*lon_range), lat=slice(*lat_range))
     cos_lat_trim = cos_lat.sel(lat=slice(*lat_range))
 
     ## Next, compute weighted avg
