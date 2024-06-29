@@ -138,33 +138,6 @@ def make_cb_range(amp, delta):
     )
 
 
-def standardize_lonlat(
-    data, rename_coords=False, reverse_latitude=False, update_longitude=False
-):
-    """update lonlat coordinates to be consistent across datasets.
-    In particular, make sure:
-        - coordinates are called "longitude" and "latitude"
-        - latitude is increasing
-        - longitude is increasing and in the range (-180, 180].
-    Function takes in and returns xr.dataarray or xr.dataset"""
-
-    ## change coord names from "lat" and "lon" to
-    ## "latitude" and "longitude", respectively
-    if rename_coords:
-        data = data.rename({"lat": "latitude", "lon": "longitude"})
-
-    ## change longitude from range [0,360) to (-180, 180]
-    if update_longitude:
-        data = switch_longitude_range(data)
-
-    ## switch direction of latitude so that it's increasing
-    if reverse_latitude:
-        latitude_updated = data.latitude.values[::-1]
-        data = data.reindex({"latitude": latitude_updated})
-
-    return data
-
-
 def spatial_avg(data, lon_range=[None, None], lat_range=[None, None]):
     """get global average of a quantity over the sphere.
     Data is xr.dataarray/xr.dataset with  a 'regular' lon/lat grid

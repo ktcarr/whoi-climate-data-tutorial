@@ -24,7 +24,7 @@ def compute_AHA(slp, slp_global_avg, norm_type="global_mean"):
 
     Args:
     - slp is gridded SLP data (at global scale)
-    - norm_type is one of {"global_mean", "detrend"} specifying
+    - norm_type is one of {None, "global_mean", "detrend"} specifying
         how to normalize the AHA index
 
     Note: returns area in KM^2.
@@ -40,6 +40,9 @@ def compute_AHA(slp, slp_global_avg, norm_type="global_mean"):
     elif norm_type == "detrend":
         trend = src.utils.get_trend(slp_global_avg)
         slp_azores_norm = slp_azores - trend
+
+    elif norm_type is None:
+        slp_azores_norm = slp_azores
 
     else:
         print("Error: specify valid normalization type.")
@@ -87,7 +90,7 @@ def count_extremes(AHA, cutoff_perc=90.0, window=25):
     return rolling_count
 
 
-def count_extremes_wrapper(slp_data, norm_type="detrend"):
+def count_extremes_wrapper(slp_data, norm_type="detrend", window=25):
     """wrapper function which takes in SLP dataset and computes # of Azores High extremes.
     Assumes dataset 'slp_data' contains pre-computed global mean"""
 
@@ -95,4 +98,8 @@ def count_extremes_wrapper(slp_data, norm_type="detrend"):
     slp_trim = slp_data["slp"]
     slp_global_avg = slp_data["slp_global_avg"]
 
-    return count_extremes(compute_AHA(slp_trim, slp_global_avg, norm_type=norm_type))
+    ## Get AHA
+    AHA = compute_AHA(slp_trim, slp_global_avg, norm_type=norm_type)
+
+    ## count # of extremes
+    return count_extremes(AHA, cutoff_perc=90.0, window=window)
