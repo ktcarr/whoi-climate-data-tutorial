@@ -2,6 +2,9 @@ import numpy as np
 import xarray as xr
 import cartopy.crs as ccrs
 import matplotlib.ticker as mticker
+from tqdm import tqdm
+import cftime
+import pandas as pd
 
 ## define some physical constants
 RAD_PER_DEG = 2 * np.pi / 360  # radians per degree
@@ -196,3 +199,85 @@ def get_trend(data, dim="year"):
     trend = xr.polyval(data[dim], polyfit_coefs)
 
     return trend
+
+
+def get_T_bar(t, trend, trend_type="exp"):
+    """Get 'background' temperature"""
+
+    ## get final and initial times
+    tf = t[-1]
+    ti = t[0]
+
+    ## get "background" temperature
+    if trend_type == "exp":
+        a = 3e-2
+        b = trend * (tf - ti) * np.exp(-a * (tf - ti))
+        T_bar = b * np.exp(a * (t - ti))
+
+    elif trend_type == "linear":
+        T_bar = (t - t[0]) * trend
+
+    else:
+        print("Not a valid trend type")
+        T_bar = 0.0
+
+    return T_bar
+
+
+def markov_simulation(
+    ti, tf, dt=1 / 365.25, g=-0.3, n=0.3, n_members=1, trend=0, trend_type="exp"
+):
+    """Minimal version of the 'stochastic climate model' studied
+    by Hasselman et al (1976) and Frankignoul and Hasselmann (1977).
+    (See Eqn 3.6 in Frankignoul and Hasselman, 1976). The damping rate
+    used here is much lower than in the paper, for illustration purposes.
+    Args:
+        - ti: number representing initial time (units: years)
+        - tf: number representing final time (units: years)
+        - dt: timestep (units: years)
+        - g: damping rate (equivalent to lambda in the paper; units: 1/year)
+        - n: noise amplitude (units: K / year^{1/2})
+        - n_members: number of ensemble members
+        - trend: calculated increase in "background" T, with units of 1/year
+            (based on (T[tf]-T[ti]) / (tf-ti)
+        - trend_type: one of "exp" (exponential) or "linear"
+    """
+
+    ## initialize RNG
+    rng = np.random.default_rng()
+
+    ## Get timesteps and dimensions for output
+    t = np.arange(ti, tf, dt)
+    nt = len(t)
+
+    ## Create empty arrays arrays to hold simulation output
+    T = np.zeros([n_members, nt])
+
+    ## get "background" temperature
+    T_bar = get_T_bar(t, trend, trend_type)[None, :]
+
+    for i, t_ in tqdm(enumerate(t[:-1])):
+        dW = np.sqrt(dt) * rng.normal(size=n_members)
+        dT = g * (T[:, i] - T_bar[:, i]) * dt + n * dW
+        T[:, i + 1] = T[:, i] + dT
+
+    ##  put in xarray
+    # time_idx = pd.date_range(start=f"{ti}-01-01", periods=nt, freq="1D")
+    time_idx = xr.cftime_range(start=cftime.datetime(ti, 1, 1), periods=nt, freq="1D")
+    e_member_idx = pd.Index(np.arange(1, n_members + 1), name="ensemble_member")
+
+    T = xr.DataArray(
+        T,
+        dims=["ensemble_member", "time"],
+        coords={"ensemble_member": e_member_idx, "time": time_idx},
+    )
+
+    ## resample to Annual
+    T = T.resample({"time": "YS"}).mean()
+
+    ## change time coordinate to year
+    year = T.time.dt.year.values
+    T = T.rename({"time": "year"})
+    T["year"] = year
+
+    return T
