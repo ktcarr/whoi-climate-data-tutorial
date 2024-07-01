@@ -253,6 +253,9 @@ def markov_simulation(
     ## Create empty arrays arrays to hold simulation output
     T = np.zeros([n_members, nt])
 
+    ## initialize with random value
+    T[:, 0] = n * rng.normal(size=n_members)
+
     ## get "background" temperature
     T_bar = get_T_bar(t, trend, trend_type)[None, :]
 
@@ -262,7 +265,6 @@ def markov_simulation(
         T[:, i + 1] = T[:, i] + dT
 
     ##  put in xarray
-    # time_idx = pd.date_range(start=f"{ti}-01-01", periods=nt, freq="1D")
     time_idx = xr.cftime_range(start=cftime.datetime(ti, 1, 1), periods=nt, freq="1D")
     e_member_idx = pd.Index(np.arange(1, n_members + 1), name="ensemble_member")
 

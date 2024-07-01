@@ -2,7 +2,7 @@ envs
 cmip_debug.ipynb
 data*
 notes.md
-scripts/scratch.ipynb
+scripts/scratch*.ipynb
 .ipynb_checkpoints
 *egg-info
 __pycache__
