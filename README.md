@@ -1,5 +1,16 @@
 # CMIP5/6 Tutorial
 
+## Set up
+#### Virtual environment
+1. Set up mamba or conda (if not already). To set up, download and install miniforge following the instructions here: https://github.com/conda-forge/miniforge.
+2. Create a project folder; e.g., with ```mkdir ~/cmip_tutorial``` and navigate to the project with ```cd ~/cmip_tutorial```
+3. Create a conda/mamba environment for the project with: ```mamba create -p ./envs``` and activate the environment with ```conda activate ./envs```
+4. Install necessary packages in the environment with ```mamba env update -p ./envs --file environment.yml```
+
+#### Accessing the climate data servers
+- Windows and (non-Mac) Linux users: follow [online instructions for CMIP5](http://cmip5.whoi.edu/?page_id=40) or [for CMIP6](http://cmip6.whoi.edu/?page_id=50).
+- Mac users: for CMIP6, open Finder, then select "Go" from the top menu bar and click "Connect to Server". Then, enter ```smb://vast.whoi.edu/proj/cmip6```. If prompted, enter your WHOI username (*without* "@whoi.edu") and password. Note the default mount location for the server is ```/Volumes/data```. For CMIP5, use the same process but with the following server address: ```smb://cmip5.whoi.edu```.
+
 ## Topics to be covered
 - model validation
 - external forcing vs. internal variability
@@ -13,18 +24,6 @@
 - first section on 'reducing' data? (could have CDO as well)
 
 ## General outline
-
-0. (optional) Setting up a virtual environment and version control.
-
-1. Accessing CMIP data at WHOI.
-
-1.5 Loading/plotting data
-
-2. Model validation 
-    - what metrics to use?
-    - comparison to observations/reanalysis: biases in mean/variability?
-
-3. Computing ensemble statistics (e.g., mean and range)
   
 
 ## Azores High example
