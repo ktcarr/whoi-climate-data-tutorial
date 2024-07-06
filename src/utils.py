@@ -225,7 +225,15 @@ def get_T_bar(t, trend, trend_type="exp"):
 
 
 def markov_simulation(
-    ti, tf, dt=1 / 365.25, g=-0.3, n=0.3, n_members=1, trend=0, trend_type="exp"
+    ti,
+    tf,
+    dt=1 / 365.25,
+    g=-0.3,
+    n=0.3,
+    n_members=1,
+    trend=0,
+    trend_type="exp",
+    nyears_spinup=10,
 ):
     """Minimal version of the 'stochastic climate model' studied
     by Hasselman et al (1976) and Frankignoul and Hasselmann (1977).
@@ -241,6 +249,7 @@ def markov_simulation(
         - trend: calculated increase in "background" T, with units of 1/year
             (based on (T[tf]-T[ti]) / (tf-ti)
         - trend_type: one of "exp" (exponential) or "linear"
+        - nyears_spinup: number of spinup years (discard these)
     """
 
     ## initialize RNG
@@ -281,5 +290,8 @@ def markov_simulation(
     year = T.time.dt.year.values
     T = T.rename({"time": "year"})
     T["year"] = year
+
+    ## discard model spinup
+    T = T.isel(year=slice(nyears_spinup, None))
 
     return T
