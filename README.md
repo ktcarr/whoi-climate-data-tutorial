@@ -1,5 +1,5 @@
 # Climate data analysis @ WHOI: a tutorial
-The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data (e.g., reanalysis products and climate model output) using python and data stored on WHOI's servers. The tutorial is designed to take place over 5-6 days, and is split into two parts. In the first part, we'll assess climate change in a region of their choice by comparing historical and pre-industrial control simulations. In the second part, we'll attempt to reproduce results from a recent paper which used the last-millenium ensemble$^1$. 
+The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data stored on WHOI's servers using python. The tutorial is designed to take place over $\sim$6 hour-long sessions, and is split into two parts. In the first part, we'll step through a template for assessing climate change: (i) defining a climate index, (ii) evaluating a model's ability to represent processes which influence this index, and (iii) assessing long-term changes in the index by comparing a model's historical and pre-industrial control simulations. In the second part, we'll see how these principles are applied in state-of-the-art research by reproducing results from a recent study of the Azores High$^1$.
 
 $^1$Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
@@ -22,6 +22,9 @@ $^\dagger$CMIP = Coupled Model Intercomparison Project
 2. Create a project folder; e.g., with ```mkdir ~/cmip_tutorial``` and navigate to the project with ```cd ~/cmip_tutorial```
 3. Create a conda/mamba environment for the project with: ```mamba create -p ./envs``` and activate the environment with ```conda activate ./envs```
 4. Install necessary packages in the environment with ```mamba env update -p ./envs --file environment.yml```
+5. Install custom module (```src```) in the environment with ```pip install -e .```
+
+For guidance on how to structure your code, I highly recommend [The Good Research Code Handbook](https://goodresearch.dev/index.html).
 
 ## Accessing the climate data servers
 - Windows and (non-Mac) Linux users: follow [online instructions for CMIP5](http://cmip5.whoi.edu/?page_id=40) or [for CMIP6](http://cmip6.whoi.edu/?page_id=50).
