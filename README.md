@@ -17,7 +17,7 @@ Azores High example (2/2) | [azores_tutorial.ipynb](scripts/azores_tutorial.ipyn
 $^\dagger$CMIP = Coupled Model Intercomparison Project   
 
 ## Set up
-#### Virtual environment
+### Virtual environment
 1. Set up mamba or conda (if not already). To set up, download and install miniforge following the instructions here: https://github.com/conda-forge/miniforge.
 2. Create a project folder; e.g., with ```mkdir ~/cmip_tutorial``` and navigate to the project with ```cd ~/cmip_tutorial```
 3. Create a conda/mamba environment for the project with: ```mamba create -p ./envs``` and activate the environment with ```conda activate ./envs```
@@ -26,9 +26,23 @@ $^\dagger$CMIP = Coupled Model Intercomparison Project
 
 For guidance on how to structure your code, I highly recommend [The Good Research Code Handbook](https://goodresearch.dev/index.html).
 
-## Accessing the climate data servers
+### Accessing the climate data servers
+Note: to access the data, you must be on the WHOI network (i.e., on the WHOI wifi or connected by VPN).
+
+#### Option 1 (preferred): mounting the network file system
 - Windows and (non-Mac) Linux users: follow [online instructions for CMIP5](http://cmip5.whoi.edu/?page_id=40) or [for CMIP6](http://cmip6.whoi.edu/?page_id=50).
 - Mac users: for CMIP6, open Finder, then select "Go" from the top menu bar and click "Connect to Server". Then, enter ```smb://vast.whoi.edu/proj/cmip6```. If prompted, enter your WHOI username (*without* "@whoi.edu") and password. Note the default mount location for the server is ```/Volumes/data```. For CMIP5, use the same process but with the following server address: ```smb://cmip5.whoi.edu```.
+
+#### Option 2: downloading the data
+__For ERA5 reanalysis__:
+- Download SST or $T_{2m}$ data from [shared Google Drive folder](https://drive.google.com/drive/folders/1FQBVTQWpvVPIrHFYlZc_OLl93JrLOWze?usp=drive_link)
+
+__For CMIP6 model output__:
+- Go to [http://cmip6.whoi.edu/search](http://cmip6.whoi.edu/search).
+- Click on the the "HTTP" link in the "Files" column for a dataset you'd like to download.
+- On the next page, select individual files to download.
+- (optional) Save these files to a folder called ```data``` in this project.
+
 
 ## Description of high-level folders & files:
 Folder/file | Description
