@@ -69,3 +69,19 @@ Folder/file | Description
 ```setup.py``` | file needed to import ```src``` module 
 ```environment.yml``` | list of packages needed for tutorial
 ```.gitignore``` | list of files and extensions ```git``` should ignore
+
+## A preview:
+### 1. Pre-processing: detrending and correlation
+<p float="left">
+ <img src="./readme_figs/wh_corr.png" width="400" />
+</p>
+
+### 2. Model validation: Gulf Stream in ORAS5 and CESM2
+<p float="left">
+ <img src="./readme_figs/gulf_stream_comparison.png" width="500" />
+</p>
+
+### 3. Climate change assessment (toy stochastic model)
+<p float="left">
+ <img src="./readme_figs/ensemble_mean.png" width="350" />
+</p>
