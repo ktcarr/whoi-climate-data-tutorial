@@ -1,4 +1,5 @@
 envs
+scripts/fetch*.sh
 cmip_debug.ipynb
 data*
 notes.md
