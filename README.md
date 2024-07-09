@@ -44,9 +44,8 @@ __For CMIP6 model output__:
 - (optional) Save these files to a folder called ```data``` in this project.
 
 #### Option 3: running in the cloud
-- Save the tutorial notebooks to Google Drive
 - Go to [https://colab.research.google.com/](https://colab.research.google.com/)
-- In Google Colab, click "File -> Open notebook -> Google Drive" and select one of the tutorial notebooks. 
+- In Google Colab, click "File -> Open notebook -> Upload" and select one of the tutorial notebooks. 
 - Go to the [shared Google Drive folder](https://drive.google.com/drive/folders/1V-aHzoYYUrU6d5ExnxEORiZxeAAisx_e?usp=drive_link)
 - Click the three dots next to the "climate-data" folder and click "Organize -> Add shortcut", then select "My Drive"
 
