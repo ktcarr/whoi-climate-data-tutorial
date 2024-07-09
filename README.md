@@ -34,10 +34,10 @@ Note: to access the data, you must be on the WHOI network (i.e., on the WHOI wif
 - Mac users: for CMIP6, open Finder, then select "Go" from the top menu bar and click "Connect to Server". Then, enter ```smb://vast.whoi.edu/proj/cmip6```. If prompted, enter your WHOI username (*without* "@whoi.edu") and password. Note the default mount location for the server is ```/Volumes/data```. For CMIP5, use the same process but with the following server address: ```smb://cmip5.whoi.edu```.
 
 #### Option 2: downloading the data and running locally
-__For ERA5 reanalysis__:
-- Download SST or $T_{2m}$ data from [shared Google Drive folder](https://drive.google.com/drive/folders/1FQBVTQWpvVPIrHFYlZc_OLl93JrLOWze?usp=drive_link)
+__For reanalysis and model data used in the tutorial__:
+- Download data from the [shared Google Drive folder](https://drive.google.com/drive/folders/1V-aHzoYYUrU6d5ExnxEORiZxeAAisx_e?usp=drive_link)
 
-__For CMIP6 model output__:
+__For other (CMIP6) model output__:
 - Go to [http://cmip6.whoi.edu/search](http://cmip6.whoi.edu/search).
 - Click on the the "HTTP" link in the "Files" column for a dataset you'd like to download.
 - On the next page, select individual files to download.
@@ -48,6 +48,7 @@ __For CMIP6 model output__:
 - In Google Colab, click "File -> Open notebook -> Upload" and select one of the tutorial notebooks. 
 - Go to the [shared Google Drive folder](https://drive.google.com/drive/folders/1V-aHzoYYUrU6d5ExnxEORiZxeAAisx_e?usp=drive_link)
 - Click the three dots next to the "climate-data" folder and click "Organize -> Add shortcut", then select "My Drive"
+- Note: __if using Google Colab, the regridding components of the tutorial will not work__, owing to package compatibility issues (cannot import the ```xesmf``` package in Colab, possibly related to [this issue](https://github.com/conda-forge/esmf-feedstock/issues/91)).
 
 
 ## Description of high-level folders & files:
