@@ -29,6 +29,11 @@ $^\dagger$CMIP = Coupled Model Intercomparison Project
 4. Install necessary packages in the environment with ```mamba env update -p ./envs --file environment.yml```
 5. Install custom module (```src```) in the environment with ```pip install -e .```
 
+### Running the code (locally)
+1. Navigate to project folder
+2. Activate virtual environment (```conda activate ./envs```)
+3. Start jupyter lab with by typing ```jupyter lab``` in terminal / command window
+
 For guidance on how to structure your code, I highly recommend [The Good Research Code Handbook](https://goodresearch.dev/index.html).
 
 ### Accessing the climate data servers
