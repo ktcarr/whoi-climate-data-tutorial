@@ -4,6 +4,7 @@ scripts/fetch*.sh
 cmip_debug.ipynb
 data*
 notes.md
+questions.md
 scripts/scratch*.ipynb
 .ipynb_checkpoints
 *egg-info
