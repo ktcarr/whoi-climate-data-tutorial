@@ -17,9 +17,14 @@ Azores High example (2/2) | [azores_tutorial.ipynb](scripts/azores_tutorial.ipyn
 $^\dagger$CMIP = Coupled Model Intercomparison Project   
 
 ## Set up
+
+### Getting the code
+- Option 1: if you're comfortable with Github, fork [the repository](https://github.com/ktcarr/whoi-climate-data-tutorial/) (see [this page](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) for more on forking), then clone it to your PC.
+- Option 2: Download the repository as a .zip file: go to [the repository home page](https://github.com/ktcarr/whoi-climate-data-tutorial/), then click "Code -> Download ZIP".
+
 ### Virtual environment
 1. Set up mamba or conda (if not already). To set up, download and install miniforge following the instructions here: https://github.com/conda-forge/miniforge.
-2. Create a project folder; e.g., with ```mkdir ~/cmip_tutorial``` and navigate to the project with ```cd ~/cmip_tutorial```
+2. Navigate to the project home folder (e.g., with ```cd ~/whoi-climate-data-tutorial```)
 3. Create a conda/mamba environment for the project with: ```mamba create -p ./envs``` and activate the environment with ```conda activate ./envs```
 4. Install necessary packages in the environment with ```mamba env update -p ./envs --file environment.yml```
 5. Install custom module (```src```) in the environment with ```pip install -e .```
