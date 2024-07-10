@@ -1,0 +1,24 @@
+channels:
+  - conda-forge
+dependencies:
+  - xarray
+  - cmocean
+  - seaborn
+  - jupyterlab
+  - black
+  - dask
+  - netcdf4
+  - scipy
+  - bottleneck
+  - h5netcdf
+  - cftime
+  - cartopy
+  - matplotlib
+  - tqdm
+  - ca-certificates
+  - certifi
+  - openssl
+  - xesmf
+  - jupyter-black
+variables:
+  HDF5_USE_FILE_LOCKING: 'FALSE'
