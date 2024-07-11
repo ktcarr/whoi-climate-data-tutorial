@@ -1,7 +1,20 @@
-# Checkpoints for each tutorial day
-## Thursday, Jul 11: defining a climate index
+# Thursday, Jul 11: defining a climate index
 
-#### Part 1: Setting filepaths and importing packages
+## Overview:
+Part 1. [Set filepaths and import packages](#Part-1:-Setting-filepaths-and-importing-packages)  
+Part 2: [Open the ERA5 temperature data](#Part-2:-Open-the-data)  
+Part 3: [Compute a climate index (monthly temperature anomaly in Woods Hole)](#Part-3:-Defining-the-index)
+
+## Goal figures:
+<p float="left">
+ <img src="../readme_figs/task_list_t2m_sample.png" width="400" />
+</p>
+
+<p float="left">
+ <img src="../readme_figs/task_list_WH_anomaly.png" width="300" />
+</p>
+
+## Part 1: Setting filepaths and importing packages
 1. __Open the [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb) notebook__. You can do this using your own virtual environment or in the cloud using Google Colab (see [instructions for Colab](#Google-Colab-instructions)).
 2. __Run the 1<sup>st</sup> code cell__ (under the header "Check if we're running in Google Colab"):
 ```
@@ -37,31 +50,36 @@ else:
 
 5. (optional) Run the rest of the code in the notebook.
 
-#### Part 2: Open the data
+### Part 2: Open the data
 6. Scroll down to the end of the notebook, and __create a new code cell__.
 7. __Get the "pattern" of filenames in the ERA5 dataset__ (there's one file per year). One way to do this is ```file_pattern = os.path.join(era5_t2m_path, "*.nc")```. This pattern will match any files in the ERA5 folder which end in ```.nc``` (file extension for NetCDF files).  To check this worked, you can print out a list of matched files with ```glob.glob(file_pattern)```.
 8. __Open the dataset__, with ```t2m = xr.open_mfdataset(file_pattern)["t2m"]```.
 9. __Plot the first timestep__, with ```plt.contourf(t2m.longitude, t2m.latitude, t2m.isel(time=0))```
 
 
-#### Part 3: Defining the index
+### Part 3: Defining the index
 9. __Get 2m temperature near Woods Hole__ with ```t2m_WH = t2m.sel(latitude=41.5, longitude=288.5)```
-10. __Define climate index as annual-mean temperature in Woods Hole__, ```climate_index = t2m_WH.groupby("time.year").mean()```.
+10. __Define climate index as temperature anomaly in Woods Hole__: first, compute the monthly averages. Then subtract the monthly averages from the original timeseries. For example,
+```python
+t2m_WH_monthly_avg = t2m_WH.groupby("time.month").mean()
+climate_index = t2m_WH.groupby("time.month") - t2m_WH_monthly_avg
+```
+  
 11. (optional): write a function which combines steps 9 and 10:
 ```python
-def get_climate_index(global_t2m):
-    """
-    Input: 'global_t2m' is DataArray with 3 dimensions (lon,lat,time)
-
-    Output: 'climate_index' is DataArray with 1 dimension (time)
-    """
-
-    ## To-do
-    climate_index = ...
-
-    return climate_index
+    def get_climate_index(global_t2m):
+        """
+        Input: 'global_t2m' is a 3-D DataArray (lon,lat,time)
+    
+        Output: 'climate_index' is a 1-D DataArray (time)
+        """
+    
+        ## To-do
+        climate_index = ...
+    
+        return climate_index
 ```
-12. __Plot the result__ with ```plt.plot(climate_index.year, climate_index)```
+12. __Plot the result__ with ```plt.plot(climate_index.time, climate_index)```
 
 
 
