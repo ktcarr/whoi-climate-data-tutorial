@@ -3,8 +3,14 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
+## 7/11 updates
+- See the [Task List](docs/task_list.md) for a list of checkpoints for each tutorial.
+- *"How should I use the tutorial notebooks?"* The notebooks are structured into three parts: filepaths / imports, examples, and "To-do"s. To use the notebooks:
+    1. (__required__) Update and execute the code cells with filepaths / imports.
+    2. (__optional__) Run the code in the examples section (everything between imports and "To-dos")
+    3. Complete the "To-do"s at the end of the notebook (see [Task List](docs/task_list.md) for detailed checkpoints)
+
 ## Outline
-__7/19 update:__ see the [Task List](docs/task_list.md) for a list of checkpoints for each tutorial.
 Date | Topic | Notebook
 -- | -- | --
 7/9 | Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
