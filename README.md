@@ -1,18 +1,17 @@
 # Climate data analysis @ WHOI: a tutorial
-The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data stored on WHOI's servers using python. The tutorial is designed to take place over ~6 hour-long sessions, and is split into two parts. In the first part, we'll step through a template for assessing climate change: (i) defining a climate index, (ii) evaluating a model's ability to represent processes which influence this index, and (iii) assessing long-term changes in the index by comparing a model's historical and pre-industrial control simulations. In the second part, we'll see how these principles are applied in state-of-the-art research by reproducing results from a recent study of the Azores High<sup>1</sup>.
+The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data stored on WHOI's servers using python. The tutorial is designed to take place over ~6 hour-long sessions, and is split into two parts. In the first part, we'll step through a template for assessing climate change: (i) defining a climate index, (ii) evaluating a model's ability to represent processes which influence this index, and (iii) assessing long-term changes in the index by comparing a model's historical and pre-industrial control simulations. ~~In the second part, we'll see how these principles are applied in state-of-the-art research by reproducing results from a recent study of the Azores High~~<sup>1</sup>.
 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
 ## Outline
-Topic | Notebook
--- | --
-Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
-Pre-processing using [```xarray```](https://docs.xarray.dev/en/stable/) and defining a climate index | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
-Climate model validation | [1_model_validation_tutorial.ipynb](scripts/1_model_validation_tutorial.ipynb)
-Asessing climate change using models | [2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
-Azores High example (1/2) | [azores_tutorial.ipynb](scripts/azores_tutorial.ipynb)
-Azores High example (2/2) | [azores_tutorial.ipynb](scripts/azores_tutorial.ipynb)
-
+Date | Topic | Notebook
+-- | -- | --
+7/9 | Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
+7/10 | Pre-processing using [```xarray```](https://docs.xarray.dev/en/stable/)  | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
+7/11 | Defining a climate index | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
+7/16 | Climate model validation | [1_model_validation_tutorial.ipynb](scripts/1_model_validation_tutorial.ipynb)
+7/17 | Detecting climate change using models  | [2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
+7/18 | TBD  | TBD
 
 <sup>*</sup>CMIP = Coupled Model Intercomparison Project   
 
@@ -93,4 +92,3 @@ Folder/file | Description
 ## Other potentially useful links
 - A guide for how to organize research code for non-computer scientists: [The Good Research Code Handbook](https://goodresearch.dev/index.html).
 - [Description of CMIP naming conventions, including variant ID](https://wcrp-cmip.org/cmip-data-access/)
-- If you're using conda and the ```conda install ...``` / ```conda env update ...``` commands are taking a long time, you could try [updating the solver to "libmamba"](https://www.anaconda.com/blog/a-faster-conda-for-a-growing-community)
