@@ -4,6 +4,7 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
 ## Outline
+See [task_list.md](docs/task_list.md) for a list of checkpoints for each tutorial.
 Date | Topic | Notebook
 -- | -- | --
 7/9 | Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
@@ -92,3 +93,5 @@ Folder/file | Description
 ## Other potentially useful links
 - A guide for how to organize research code for non-computer scientists: [The Good Research Code Handbook](https://goodresearch.dev/index.html).
 - [Description of CMIP naming conventions, including variant ID](https://wcrp-cmip.org/cmip-data-access/)
+
+
