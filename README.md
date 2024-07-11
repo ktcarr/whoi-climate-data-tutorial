@@ -4,7 +4,7 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
 ## Outline
-See [task_list.md](docs/task_list.md) for a list of checkpoints for each tutorial.
+__7/19 update:__ see the [Task List](docs/task_list.md) for a list of checkpoints for each tutorial.
 Date | Topic | Notebook
 -- | -- | --
 7/9 | Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
