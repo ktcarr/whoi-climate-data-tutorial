@@ -3,6 +3,10 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
+## 7/16 updates
+- See the [results](results) folder to see the output of running the each of the tutorial notebooks (output saved as .html)
+- See the [FAQ](docs/FAQ.md) page for a possible solution to the "NetCDF: HDF error" that many people have been getting when trying to open data from the CMIP6 server
+
 ## 7/11 updates
 - See the [Task List](docs/task_list.md) for a list of checkpoints for each tutorial.
 - *"How should I use the tutorial notebooks?"* The notebooks are structured into three parts: filepaths / imports, examples, and "To-do"s. To use the notebooks:
