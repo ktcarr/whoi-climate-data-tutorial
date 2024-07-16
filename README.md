@@ -4,7 +4,7 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
 ## 7/16 updates
-- See the [results](results) folder to see the output of running the each of the tutorial notebooks (output saved as .html)
+- See the [results](results) folder to see the output of running the each of the tutorial notebooks. For example, to see the output of scripts/0_xarray_tutorial.ipynb, navigate to the folder [results/0_xarray_tutorial](results/0_xarray_tutorial) and open the markdown file [0_xarray_tutorial.md](results/0_xarray_tutorial/0_xarray_tutorial.md).
 - See the [FAQ](docs/FAQ.md) page for a possible solution to the "NetCDF: HDF error" that many people have been getting when trying to open data from the CMIP6 server
 
 ## 7/11 updates
