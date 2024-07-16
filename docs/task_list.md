@@ -91,7 +91,8 @@ climate_index = t2m_WH.groupby("time.month") - t2m_WH_monthly_avg
 ## Overview:
 Part 1. [Set filepaths and import packages](#Part-1:-Setting-filepaths)  
 Part 2: [Open the ERA5 temperature data](#Part-2:-Open-data)  
-Part 3: 
+Part 3: [Subset data in time and space](#Part-3:-Subset-data-in-time-and-space)  
+Part 4: [Plot the bias](#Part-4:-Plot-the-bias)
 
 ## Goal figures:
 <p float="left">
