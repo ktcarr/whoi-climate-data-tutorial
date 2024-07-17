@@ -209,6 +209,9 @@ Part 4: [Make a histogram](#Part-4:-Make-a-histogram)
 
 ## Goal figures:
 <p float="left">
+ <img src="../readme_figs/task_list_cesm_timeseries.png" width=600" />
+</p>
+<p float="left">
  <img src="../readme_figs/task_list_cesm_histogram.png" width="400" />
 </p>
 
@@ -264,11 +267,12 @@ def get_sample_mean(data, nyears):
     """
 
     ## Select start/end years for the sample
-    sample_year_start = rng.choice(data.year[:-nyears])
-    sample_year_end = sample_year_start + nyears
+    possible_start_years = data.year[:-nyears]
+    start_year = rng.choice(possible_start_years)
+    end_year = start_year + nyears
 
     ## Select the sample
-    sample = data.sel(year=slice(sample_year_start, sample_year_end))
+    sample = data.sel(year=slice(start_year, end_year))
 
     ## compute sample mean
     sample_mean = sample.mean("year")
