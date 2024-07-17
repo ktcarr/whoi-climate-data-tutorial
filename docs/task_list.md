@@ -203,8 +203,8 @@ plt.show()
 ## Overview:
 Part 1. [Set filepaths and import packages](#Part-1:-Set-filepaths)  
 Part 2: [Open the CESM data](#Part-2:-Open-CESM-data)  
-Part 3: [Compute climate index](#Part-3:-Compute-climate-index)  
-Part 4: [Draw random samples from PI-control](#Part-4:-Draw-random-samples-from-PI-control)
+Part 3: [Draw random samples from PI-control](#Part-3:-Draw-random-samples-from-PI-control)  
+Part 4: [Make a histogram](#Part-4:-Make-a-histogram)
 
 ## Goal figures:
 <p float="left">
@@ -249,16 +249,19 @@ else:
 ```python
 def trim(data):
     """Trim data to region around Woods Hole"""
-    return data.sel(lon=slice(285,293), lat=slice(39,44))
+    return data.sel(lon=slice(270,310), lat=slice(20,60))
 ```
 
 5. __Open data from the *historical* simulation__ and compute. We already defined the path to the data above (```hist_path```). Let's specify the name of the file: ```hist_filename = tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc``` and define the "full" path to the data as ```hist_full_path = os.path.join(hist_path, hist_filename)```. Finally, we can open the data using ```xr.open_dataset``` (note that without ```mask_and_scale=False``` you may get a warning related to NaN fill values):
 ```python
 ## open the data
-T2m_hist = xr.open_dataset(hist_full_path, mask_and_scale=False)["tas"]
+T2m_hist = xr.open_dataset(hist_full_path, mask_and_scale=False)
 
-## trim in space, and load into memory
+## trim in space
 T2m_hist = trim(T2m_hist).compute()
+
+## select 'tas' variable and load into memory
+T2m_hist = T2m_hist["tas"].compute()
 ```
 
 6. __Open data from the *pre-industrial control* simulation__. We'll do this using ```xr.open_mfdataset```. To speed up the data-loading process, we'll pass the pre-processing function ```trim``` as an argument to ```xr.open_mfdataset```:
@@ -271,17 +274,26 @@ T2m_pico = xr.open_mfdataset(
     file_pattern, 
     preprocess=trim,
     mask_and_scale=False
-)["tas"]
+)
 
 ## Finally, load it into memory
-T2m_pico.load();
+T2m_pico = T2m_pico["tas"].compute()
 ```
 
 
 7. __Write a function to compute the Woods Hole climate index__, and compute the index for both datasets. Here, we'll define this index as the annual-average temperature in the gridcell closest to Woods Hole.
 ```python
 def WH_index(T2m):
-    """function to compute 'Woods Hole climate index'"""
+    """Function to compute 'Woods Hole climate index. We'll define
+    this index as the annual-average temperature in the gridcell
+    closest to the (lon, lat) point (288.5, 41.5).
+
+    Args:
+        T2m: xr.DataArray with dimensions (lon, lat, time)
+
+    Returns:
+        T2m_WH: xr. DataArray with dimension (year)
+    """
 
     ## first, interpolate close to Woods Hole
     T2m_WH = T2m.interp(lat=41.5, lon=288.5, method="nearest")
@@ -296,49 +308,72 @@ T2m_WH_hist = WH_index(T2m_hist)
 T2m_WH_pico = WH_index(T2m_pico)
 ```
 
-## Part 4: Draw random samples from PI-control
+## Part 3: Draw random samples from PI-control
 8. We're going to estimate the probability distribution for 
 the PI-control run by drawing lots of random samples (with replacement). Let's start by __writing a function which draws a single random sample__ of length ```nyears``` and computes the mean:
 ```python
-def get_random_sample_mean(data, nyears):
-    """function draws a random sample from given dataset,
-    and averages over period"""
+def get_sample_mean(data, nyears):
+    """
+    Function draws a random sample from given dataset,
+    and averages over period.
+    Args:
+        'data': xr.DataArray to draw samples from 
+        'nyears': integer specifying how many years in each sample
+        
+    Returns:
+        'sample_mean': xr.DataArray containing mean of single sample
+    """
 
-    ## get random start year for random sample
-    max_idx = len(data.year) - nyears
-    idx_start = rng.choice(np.arange(0, max_idx))
+    ## Select start/end years for the sample
+    sample_year_start = rng.choice(data.year[:-nyears])
+    sample_year_end = sample_year_start + nyears
 
-    ## get random sample
-    sample = data.isel(year=slice(idx_start, idx_start + nyears))
+    ## Select the sample
+    sample = data.sel(year=slice(sample_year_start, sample_year_end))
 
-    ## get sample mean
+    ## compute sample mean
     sample_mean = sample.mean("year")
-    
+
     return sample_mean
 ```
 
 9. Next, __write a function which draws multiple samples__ and computes the mean of each:
 ```python
-def get_random_sample_means(data, nsamples, nyears=30):
-    """get multiple random samples"""
+def get_sample_means(data, nsamples, nyears=30):
+    """
+    Function draws multiple random samples, by 
+    repeatedly calling the 'get_sample_mean' function.
+    Args:
+        'data': xr.DataArray to draw samples from
+        'nsamples': number of samples to draw
+        'nyears': number of years in each sample
 
-    ## get random sample means
-    sample_means = [
-        get_random_sample_mean(data, nyears) for _ in tqdm.tqdm(np.arange(nsamples))
-    ]
+    Returns:
+        'sample_means' xr.DataArray containing mean for each sample
+        
+    """
 
-    ## Put in xr.DataArray.
-    sample_dim = pd.Index(np.arange(nsamples), name="sample")
-    sample_means = xr.concat(sample_means, dim=sample_dim)
+    ## initialize empty list to hold sample means
+    sample_means = []
+
+    ## do the simulations inside a loop
+    for _ in range(nsamples):
+
+        ## select a random sample
+        sample_means.append(get_sample_mean(data, nyears))
+
+    ## concatenate list into xarray
+    sample_means = xr.concat(sample_means, dim="sample")
+    
     return sample_means
 ```
 
 10. Finally, __draw 3,000 random samples__ from the pre-industrial control output:
 ```python
-sample_means = get_random_sample_means(data=T2m_pico, nsamples=3000, nyears=30)
+sample_means = get_sample_means(data=T2m_pico, nsamples=3000)
 ```
 
-#### Part 5: Make a histogram 
+## Part 4: Make a histogram 
 11. __Compute the histogram__, using the ```np.histogram``` function (we'll manually specify the bins for the histogram):
 ```python
 bin_width = 0.1
@@ -346,7 +381,9 @@ bin_edges = np.arange(284.5, 286, bin_width)
 histogram_pico, _ = np.histogram(sample_means, bins=bin_edges)
 ```
 
-12. __Plot the histogram__, using the following code (for example):
+12. __Compute some statistics__. First, compute the mean of the PI-control histogram by averaging over all the sample means, ```pico_mean = sample_means.mean()```. Then compute the mean over the last 30 years in the historical simulation with ```hist_mean = T2m_WH_hist.sel(year=slice(-30,None)).mean()```
+
+13. __Plot the histogram and stats__, using the following code (for example):
 ```python
 ## blank canvas for plotting
 fig, ax = plt.subplots(figsize=(4, 3))
