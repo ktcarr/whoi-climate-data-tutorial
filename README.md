@@ -3,6 +3,10 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
+## 7/17 updates
+- Here's a link to the (new) notebook we'll use today: [scripts/1.5_detection_tutorial.ipynb](scripts/1.5_detection_tutorial.ipynb). In this notebook we'll compare Woods Hole 2m-temperature between pre-industrial control and historical simulations
+- We'll look at large ensembles tomorrow, using the following notebook: [scripts/2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
+
 ## 7/16 updates
 - See the [results](results) folder to see the output of running the each of the tutorial notebooks. For example, to see the output of scripts/0_xarray_tutorial.ipynb, navigate to the folder [results/0_xarray_tutorial](results/0_xarray_tutorial) and open the markdown file [0_xarray_tutorial.md](results/0_xarray_tutorial/0_xarray_tutorial.md).
 - See the [FAQ](docs/FAQ.md) page for a possible solution to the "NetCDF: HDF error" that many people have been getting when trying to open data from the CMIP6 server
@@ -21,8 +25,8 @@ Date | Topic | Notebook
 7/10 | Pre-processing using [```xarray```](https://docs.xarray.dev/en/stable/)  | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
 7/11 | Defining a climate index | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
 7/16 | Climate model validation | [1_model_validation_tutorial.ipynb](scripts/1_model_validation_tutorial.ipynb)
-7/17 | Detecting climate change using models  | [2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
-7/18 | TBD  | TBD
+7/17 | Detecting climate change using models (1/2)  | [1.5_detection_tutorial.ipynb](scripts/1.5_detection_tutorial.ipynb)
+7/18 | Detecting climate change using models (2/2)  | [2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
 
 <sup>*</sup>CMIP = Coupled Model Intercomparison Project   
 
