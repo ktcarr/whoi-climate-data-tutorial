@@ -381,7 +381,7 @@ bin_edges = np.arange(284.5, 286, bin_width)
 histogram_pico, _ = np.histogram(sample_means, bins=bin_edges)
 ```
 
-12. __Compute some statistics__. First, compute the mean of the PI-control histogram by averaging over all the sample means, ```pico_mean = sample_means.mean()```. Then compute the mean over the last 30 years in the historical simulation with ```hist_mean = T2m_WH_hist.sel(year=slice(-30,None)).mean()```
+12. __Compute index over last 30 years of historical simulation__, for comparison to the PI control. Compute this value with ```T2m_last30 = T2m_WH_hist.sel(year=slice(-30,None)).mean()```
 
 13. __Plot the histogram and stats__, using the following code (for example):
 ```python
@@ -391,16 +391,11 @@ fig, ax = plt.subplots(figsize=(4, 3))
 ## plot the histogram
 ax.stairs(values=histogram_pico, edges=bin_edges, color="k", label="PI-control")
 
-## plot mean value
+## plot mean value for the PI control
 ax.axvline(sample_means.mean(), c="k", ls="--")
 
 ## plot mean over last ~30 years
-ax.axvline(
-    T2m_hist.isel(year=slice(-30, None)).mean("year"),
-    c="r",
-    ls="--",
-    label=r"1984-2014",
-)
+ax.axvline(T2m_last30, c="r", ls="--", label=r"1984-2014")
 
 ## label the plot
 ax.set_ylabel("# samples")
