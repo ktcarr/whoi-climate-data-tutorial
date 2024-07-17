@@ -263,12 +263,12 @@ T2m_hist = trim(T2m_hist).compute()
 
 6. __Open data from the *pre-industrial control* simulation__. We'll do this using ```xr.open_mfdataset```. To speed up the data-loading process, we'll pass the pre-processing function ```trim``` as an argument to ```xr.open_mfdataset```:
 ```python
-## Get list of files to load
-T2m_pico_files = glob.glob(os.path.join(pico_path, "*.nc"))
+## Get file pattern of files to load
+file_pattern = os.path.join(pico_path, "*.nc")
 
 ## Now, open the dataset
 T2m_pico = xr.open_mfdataset(
-    T2m_pico_files, 
+    file_pattern, 
     preprocess=trim,
     mask_and_scale=False
 )["tas"]
