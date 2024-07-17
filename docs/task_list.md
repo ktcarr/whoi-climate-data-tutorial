@@ -243,19 +243,16 @@ else:
     pico_path = ...
 ```
 
-4. __Run the 2<sup>nd</sup> code cell__ (filepaths, from above)  and __3<sup>rd</sup> code cell__ (package imports)
-
 ## Part 2: Open CESM data and compute index
-5. Scroll down to the end of the notebook, and __create a new code cell__.
 
-6. __Write a pre-processing function__ to trim the data in lon/lat space. We'll use this function to reduce the amount of data we need to load into memory.
+4. __Write a pre-processing function__ to trim the data in lon/lat space. We'll use this function to reduce the amount of data we need to load into memory.
 ```python
 def trim(data):
     """Trim data to region around Woods Hole"""
     return data.sel(lon=slice(285,293), lat=slice(39,44))
 ```
 
-8. __Open data from the *historical* simulation__ and compute. We already defined the path to the data above (```hist_path```). Let's specify the name of the file: ```hist_filename = tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc``` and define the "full" path to the data as ```hist_full_path = os.path.join(hist_path, hist_filename)```. Finally, we can open the data using ```xr.open_dataset``` (note that without ```mask_and_scale=False``` you may get a warning related to NaN fill values):
+5. __Open data from the *historical* simulation__ and compute. We already defined the path to the data above (```hist_path```). Let's specify the name of the file: ```hist_filename = tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc``` and define the "full" path to the data as ```hist_full_path = os.path.join(hist_path, hist_filename)```. Finally, we can open the data using ```xr.open_dataset``` (note that without ```mask_and_scale=False``` you may get a warning related to NaN fill values):
 ```python
 ## open the data
 T2m_hist = xr.open_dataset(hist_full_path, mask_and_scale=False)["tas"]
@@ -264,7 +261,7 @@ T2m_hist = xr.open_dataset(hist_full_path, mask_and_scale=False)["tas"]
 T2m_hist = trim(T2m_hist).compute()
 ```
 
-8. __Open data from the *pre-industrial control* simulation__. We'll do this using ```xr.open_mfdataset```. To speed up the data-loading process, we'll write a pre-processing function called ```trim``` which trims the data in lon/lat space to the region around Woods Hole. Then we'll pass this function as an argument to ```xr.open_mfdataset```:
+6. __Open data from the *pre-industrial control* simulation__. We'll do this using ```xr.open_mfdataset```. To speed up the data-loading process, we'll pass the pre-processing function ```trim``` as an argument to ```xr.open_mfdataset```:
 ```python
 ## Get list of files to load
 T2m_pico_files = glob.glob(os.path.join(pico_path, "*.nc"))
@@ -281,7 +278,7 @@ T2m_pico.load();
 ```
 
 
-6. __Write a function to compute the Woods Hole climate index__, and compute the index for both datasets. Here, we'll define this index as the annual-average temperature in the gridcell closest to Woods Hole.
+7. __Write a function to compute the Woods Hole climate index__, and compute the index for both datasets. Here, we'll define this index as the annual-average temperature in the gridcell closest to Woods Hole.
 ```python
 def WH_index(T2m):
     """function to compute 'Woods Hole climate index'"""
@@ -300,7 +297,7 @@ T2m_WH_pico = WH_index(T2m_pico)
 ```
 
 ## Part 4: Draw random samples from PI-control
-9. We're going to estimate the probability distribution for 
+8. We're going to estimate the probability distribution for 
 the PI-control run by drawing lots of random samples (with replacement). Let's start by __writing a function which draws a single random sample__ of length ```nyears``` and computes the mean:
 ```python
 def get_random_sample_mean(data, nyears):
@@ -320,7 +317,7 @@ def get_random_sample_mean(data, nyears):
     return sample_mean
 ```
 
-10. Next, __write a function which draws multiple samples__ and computes the mean of each:
+9. Next, __write a function which draws multiple samples__ and computes the mean of each:
 ```python
 def get_random_sample_means(data, nsamples, nyears=30):
     """get multiple random samples"""
@@ -336,20 +333,20 @@ def get_random_sample_means(data, nsamples, nyears=30):
     return sample_means
 ```
 
-11. Finally, __draw 1,000 random samples__ from the pre-industrial control output:
+10. Finally, __draw 3,000 random samples__ from the pre-industrial control output:
 ```python
 sample_means = get_random_sample_means(data=T2m_pico, nsamples=3000, nyears=30)
 ```
 
 #### Part 5: Make a histogram 
-12. __Compute the histogram__, using the ```np.histogram``` function (we'll manually specify the bins for the histogram):
+11. __Compute the histogram__, using the ```np.histogram``` function (we'll manually specify the bins for the histogram):
 ```python
 bin_width = 0.1
 bin_edges = np.arange(284.5, 286, bin_width)
 histogram_pico, _ = np.histogram(sample_means, bins=bin_edges)
 ```
 
-13. __Plot the histogram__, using the following code (for example):
+12. __Plot the histogram__, using the following code (for example):
 ```python
 ## blank canvas for plotting
 fig, ax = plt.subplots(figsize=(4, 3))
