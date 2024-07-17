@@ -1,6 +1,7 @@
 # Table of contents
 - [Thu, Jul 11: defining a climate index](#Thursday,-Jul-11:-defining-a-climate-index)
 - [Tue, Jul 16: model validation](#Tuesday,-Jul-16:-model-validation)
+- [Wed, Jul 17: climate change detection](#Wed,-Jul-17:-Climate-change-detection-(1/2))
 
 # Thursday, Jul 11: defining a climate index
 
@@ -197,7 +198,7 @@ ax.set_title("Bias")
 plt.show()
 ```
 
-# Wednesday, Jul 17: Climate change detection (1/2)
+# Wed, Jul 17: Climate change detection (1/2)
 
 ## Overview:
 Part 1. [Set filepaths and import packages](#Part-1:-Set-filepaths)  
@@ -247,24 +248,46 @@ else:
 ## Part 2: Open CESM data and compute index
 5. Scroll down to the end of the notebook, and __create a new code cell__.
 
-6. __Open data from the *historical* simulation__. We already defined the path to the data above (```hist_path```). Let's specify the name of the file: ```hist_filename = tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc``` and define the "full" path to the data as ```hist_full_path = os.path.join(hist_path, hist_filename)```. Finally, we can open the data using ```xr.open_dataset``` (note that without ```mask_and_scale=False``` you may get a warning related to NaN fill values):
+6. __Write a pre-processing function__ to trim the data in lon/lat space. We'll use this function to reduce the amount of data we need to load into memory.
 ```python
-T2m_hist = xr.open_dataset(hist_full_path, mask_and_scale=False)["tas"]
+def trim(data):
+    """Trim data to region around Woods Hole"""
+    return data.sel(lon=slice(285,293), lat=slice(39,44))
 ```
 
-7. __Open data from the *pre-industrial control* simulation__. The CESM2 data is all contained with a single file called ```tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc```. To open it, combine the filepath and filename with:
+8. __Open data from the *historical* simulation__ and compute. We already defined the path to the data above (```hist_path```). Let's specify the name of the file: ```hist_filename = tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc``` and define the "full" path to the data as ```hist_full_path = os.path.join(hist_path, hist_filename)```. Finally, we can open the data using ```xr.open_dataset``` (note that without ```mask_and_scale=False``` you may get a warning related to NaN fill values):
 ```python
-cesm_fname = "tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc"
-cesm_t2m_path_full = os.path.join(cesm_t2m_path, cesm_fname)
-T2m_cesm = xr.open_dataset(cesm_t2m_path_full)["tas"]
+## open the data
+T2m_hist = xr.open_dataset(hist_full_path, mask_and_scale=False)["tas"]
+
+## trim in space, and load into memory
+T2m_hist = trim(T2m_hist).compute()
 ```
-8. __Write a function to compute the Woods Hole climate index__, and compute the index for both datasets. Here, we'll define this index as the annual-average temperature in the gridcell closest to Woods Hole.
+
+8. __Open data from the *pre-industrial control* simulation__. We'll do this using ```xr.open_mfdataset```. To speed up the data-loading process, we'll write a pre-processing function called ```trim``` which trims the data in lon/lat space to the region around Woods Hole. Then we'll pass this function as an argument to ```xr.open_mfdataset```:
+```python
+## Get list of files to load
+T2m_pico_files = glob.glob(os.path.join(pico_path, "*.nc"))
+
+## Now, open the dataset
+T2m_pico = xr.open_mfdataset(
+    T2m_pico_files, 
+    preprocess=trim,
+    mask_and_scale=False
+)["tas"]
+
+## Finally, load it into memory
+T2m_pico.load();
+```
+
+
+6. __Write a function to compute the Woods Hole climate index__, and compute the index for both datasets. Here, we'll define this index as the annual-average temperature in the gridcell closest to Woods Hole.
 ```python
 def WH_index(T2m):
     """function to compute 'Woods Hole climate index'"""
 
     ## first, interpolate close to Woods Hole
-    T2m_WH = T2m.isel(lat=140, lon=231)
+    T2m_WH = T2m.interp(lat=41.5, lon=288.5, method="nearest")
 
     ## Get annual average
     T2m_WH = T2m_WH.groupby("time.year").mean()
