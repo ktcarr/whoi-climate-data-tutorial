@@ -248,8 +248,21 @@ else:
 4. __Write a pre-processing function__ to trim the data in lon/lat space. We'll use this function to reduce the amount of data we need to load into memory.
 ```python
 def trim(data):
-    """Trim data to region around Woods Hole"""
-    return data.sel(lon=slice(270,310), lat=slice(20,60))
+    """
+    Trim data in lon/lat space to a region around Woods Hole.
+    Woods Hole has (lon,lat) coords of approximately (288.5, 41.5).
+
+    Args:
+        data: xr.DataArray object
+
+    Returns:
+        data_trimmed : xr.DataArray object
+    """
+
+    ## Trim the data in lon/lat space
+    data_trimmed = data.sel(lon=slice(270,310), lat=slice(20,60))
+
+    return data_trimmed
 ```
 
 5. __Open data from the *historical* simulation__ and compute. We already defined the path to the data above (```hist_path```). Let's specify the name of the file: ```hist_filename = tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc``` and define the "full" path to the data as ```hist_full_path = os.path.join(hist_path, hist_filename)```. Finally, we can open the data using ```xr.open_dataset``` (note that without ```mask_and_scale=False``` you may get a warning related to NaN fill values):
