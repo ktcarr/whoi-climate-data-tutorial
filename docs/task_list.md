@@ -199,10 +199,11 @@ plt.show()
 ```
 
 # Wed, Jul 17: Climate change detection (1/2)
+In this tutorial, most of the code is already written – we'll fill in the important parts (labeled with "<mark>To-do</mark>"s in the accompanying notebook, [1.5_detection_tutorial.ipynb](../scripts/1.5_detection_tutorial.ipynb)). Below are detailed instructions for how to complete the <mark>To-do</mark>s and run the entire notebook (note: if the "<mark>To-do</mark>"s aren't completed in the notebook, the code will not run).
 
 ## Overview:
 Part 1. [Set filepaths and import packages](#Part-1:-Set-filepaths)  
-Part 2: [Open the CESM data](#Part-2:-Open-CESM-data)  
+Part 2: [Open the CESM data](#Part-2:-Open-CESM-data-and-compute-index)  
 Part 3: [Draw random samples from PI-control](#Part-3:-Draw-random-samples-from-PI-control)  
 Part 4: [Make a histogram](#Part-4:-Make-a-histogram)
 
@@ -226,7 +227,7 @@ except:
 ```
 The purpose of this cell is to detect if we're using Google Colab and, if so, link the notebook with Google Drive. If you're using Colab, you may get an error message about the kernel crashing after the cell finishes executing – if so, run the cell again; it seems to work for me the second time.
 
-3. __Update the filepaths ```hist_path``` and ```pico_path``` in the 2<sup>nd</sup> code cell.__ These are the paths to the 2m-temperature data for CESM2 climate model's "historical" and "pre-industrial control" runs, respectively. If you're using Colab (```IN_COLAB``` is True), you shouldn't have to change anything. If you're not using Colab, you need to modify the filepath to match the location of the data (if you're on Windows, you may have issues with backslashes; see [note below](#Windows-filepaths)).
+3. <mark>To-do</mark>: __Update the filepaths ```hist_path``` and ```pico_path``` in the 2<sup>nd</sup> code cell.__ These are the paths to the 2m-temperature data for CESM2 climate model's "historical" and "pre-industrial control" runs, respectively. If you're using Colab (```IN_COLAB``` is True), you shouldn't have to change anything. If you're not using Colab, you need to modify the filepath to match the location of the data (if you're on Windows, you may have issues with backslashes; see [note below](#Windows-filepaths)).
 ```python
 if IN_COLAB:
 
@@ -244,86 +245,11 @@ else:
 ```
 
 ## Part 2: Open CESM data and compute index
-
-4. __Write a pre-processing function__ to trim the data in lon/lat space. We'll use this function to reduce the amount of data we need to load into memory.
-```python
-def trim(data):
-    """
-    Trim data in lon/lat space to a region around Woods Hole.
-    Woods Hole has (lon,lat) coords of approximately (288.5, 41.5).
-
-    Args:
-        data: xr.DataArray object
-
-    Returns:
-        data_trimmed : xr.DataArray object
-    """
-
-    ## Trim the data in lon/lat space
-    data_trimmed = data.sel(lon=slice(270,310), lat=slice(20,60))
-
-    return data_trimmed
-```
-
-5. __Open data from the *historical* simulation__ and compute. We already defined the path to the data above (```hist_path```). Let's specify the name of the file: ```hist_filename = tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc``` and define the "full" path to the data as ```hist_full_path = os.path.join(hist_path, hist_filename)```. Finally, we can open the data using ```xr.open_dataset``` (note that without ```mask_and_scale=False``` you may get a warning related to NaN fill values):
-```python
-## open the data
-T2m_hist = xr.open_dataset(hist_full_path, mask_and_scale=False)
-
-## trim in space
-T2m_hist = trim(T2m_hist).compute()
-
-## select 'tas' variable and load into memory
-T2m_hist = T2m_hist["tas"].compute()
-```
-
-6. __Open data from the *pre-industrial control* simulation__. We'll do this using ```xr.open_mfdataset```. To speed up the data-loading process, we'll pass the pre-processing function ```trim``` as an argument to ```xr.open_mfdataset```:
-```python
-## Get file pattern of files to load
-file_pattern = os.path.join(pico_path, "*.nc")
-
-## Now, open the dataset
-T2m_pico = xr.open_mfdataset(
-    file_pattern, 
-    preprocess=trim,
-    mask_and_scale=False
-)
-
-## Finally, load it into memory
-T2m_pico = T2m_pico["tas"].compute()
-```
-
-
-7. __Write a function to compute the Woods Hole climate index__, and compute the index for both datasets. Here, we'll define this index as the annual-average temperature in the gridcell closest to Woods Hole.
-```python
-def WH_index(T2m):
-    """Function to compute 'Woods Hole climate index. We'll define
-    this index as the annual-average temperature in the gridcell
-    closest to the (lon, lat) point (288.5, 41.5).
-
-    Args:
-        T2m: xr.DataArray with dimensions (lon, lat, time)
-
-    Returns:
-        T2m_WH: xr. DataArray with dimension (year)
-    """
-
-    ## first, interpolate close to Woods Hole
-    T2m_WH = T2m.interp(lat=41.5, lon=288.5, method="nearest")
-
-    ## Get annual average
-    T2m_WH = T2m_WH.groupby("time.year").mean()
-
-    return T2m_WH
-
-## Apply the function to the data here
-T2m_WH_hist = WH_index(T2m_hist)
-T2m_WH_pico = WH_index(T2m_pico)
-```
+4. __Run code cells in this section__: these are all things we've covered already, so we'll breeze through it. *You shouldn't need to modify any code for this section to run*. In short, the code in this section does the following things: trims the data, loads it into memory, and compute the Woods Hole "climate index" (2m-temperature in the grid cell closest to Woods Hole). After running the code in this section, we'll have two xr.DataArrays representing timeseries of annual-mean 2m-temperature in the historical and pre-industrial control simulations, respectively. In the code, these variables are called ```T2m_WH_hist``` and ```T2m_WH_pico```; each are xr.DataArrays with 1-dimension (```"year"```).
 
 ## Part 3: Draw random samples from PI-control
-8. We're going to estimate the probability distribution for 
-the PI-control run by drawing lots of random samples (with replacement). Let's start by __writing a function which draws a single random sample__ of length ```nyears``` and computes the mean:
+5. <mark>To-do</mark>: We're going to estimate the probability distribution for 
+the PI-control run by drawing lots of random samples (with replacement). Let's start by __writing a function which draws a single random sample__ of length ```nyears``` and computes the mean. For example,
 ```python
 def get_sample_mean(data, nyears):
     """
@@ -350,7 +276,7 @@ def get_sample_mean(data, nyears):
     return sample_mean
 ```
 
-9. Next, __write a function which draws multiple samples__ and computes the mean of each:
+6. <mark>To-do</mark>: Next, __write a function which draws multiple samples__ and computes the mean of each. For example,
 ```python
 def get_sample_means(data, nsamples, nyears=30):
     """
@@ -381,22 +307,22 @@ def get_sample_means(data, nsamples, nyears=30):
     return sample_means
 ```
 
-10. Finally, __draw 3,000 random samples__ from the pre-industrial control output:
+7. <mark>To-do</mark>: Finally, __draw 3,000 random samples__ from the pre-industrial control output. For example,
 ```python
 sample_means = get_sample_means(data=T2m_pico, nsamples=3000)
 ```
 
 ## Part 4: Make a histogram 
-11. __Compute the histogram__, using the ```np.histogram``` function (we'll manually specify the bins for the histogram):
+8. __Compute the histogram__, using the ```np.histogram``` function (we'll manually specify the bins for the histogram):
 ```python
 bin_width = 0.1
 bin_edges = np.arange(284.5, 286, bin_width)
 histogram_pico, _ = np.histogram(sample_means, bins=bin_edges)
 ```
 
-12. __Compute index over last 30 years of historical simulation__, for comparison to the PI control. Compute this value with ```T2m_last30 = T2m_WH_hist.sel(year=slice(-30,None)).mean()```
+9. <mark>To-do</mark>: __Compute index over last 30 years of historical simulation__, for comparison to the PI control. For example, compute this value with ```T2m_last30 = T2m_WH_hist.isel(year=slice(-30,None)).mean()```
 
-13. __Plot the histogram and stats__, using the following code (for example):
+10. __Plot the histogram and stats__, using the following code (for example):
 ```python
 ## blank canvas for plotting
 fig, ax = plt.subplots(figsize=(4, 3))
