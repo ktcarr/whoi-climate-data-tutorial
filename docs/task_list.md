@@ -350,8 +350,15 @@ ax.legend()
 plt.show()
 ```
 
-## Thu, Jul 18: WHOI model inter-comparison
+# Thu, Jul 18: WHOI model inter-comparison
 Items that need to be completed for the code to run are marked with <mark>To-do</mark>.
+
+## Goal figure:
+<p float="left">
+ <img src="../readme_figs/task_list_1pctCO2.png" width=600" />
+</p>
+
+0. __Open the [whoi_mip.ipynb](../scripts/whoi_mip.ipynb) notebook__.
 
 1. __Preliminaries__: run "Google Colab" and "import" cells.
 
