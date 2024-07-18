@@ -5,7 +5,7 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 
 ## 7/18 updates
 - ~~We'll look at large ensembles today, using the following notebook: [scripts/2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)~~
-- Here's a link to the (new) notebook we'll use today: [scripts/whoi_mip.ipynb](scripts/whoi_mip.ipynb). In this notebook we'll compare Woods Hole 2m-temperature simulations in the "1pctCO2" scenario of a few CMIP models.
+- Here's a link to the (new) notebook we'll use today: [scripts/whoi_mip.ipynb](scripts/whoi_mip.ipynb). We'll compare Woods Hole 2m-temperature simulations in the "1pctCO2" scenario of a few CMIP models. See the [Task List](docs/task_list.md) for solutions to the "<mark>To-do</mark>"s in the notebook.
 
 
 ## 7/17 updates
