@@ -2,6 +2,7 @@
 - [Thu, Jul 11: defining a climate index](#Thursday,-Jul-11:-defining-a-climate-index)
 - [Tue, Jul 16: model validation](#Tuesday,-Jul-16:-model-validation)
 - [Wed, Jul 17: climate change detection](#Wed,-Jul-17:-Climate-change-detection-(1/2))
+- [Thu, Jul 18: WHOI model inter-comparison](#Thu,-Jul-18:-WHOI-model-intercomparison)
 
 # Thursday, Jul 11: defining a climate index
 
@@ -345,6 +346,94 @@ ax.set_ylabel("# samples")
 ax.set_xlabel(r"$K$")
 ax.set_title(r"30-year average $T_{2m}$ in Woods Hole")
 ax.legend()
+
+plt.show()
+```
+
+## Thu, Jul 18: WHOI model inter-comparison
+Items that need to be completed for the code to run are marked with <mark>To-do</mark>.
+
+1. __Preliminaries__: run "Google Colab" and ""import" cells.
+
+2. <mark>To-do:</mark> __Set filepaths.__
+
+3. __Define climate index function__. This index – 2m-temperature near Woods Hole – is the same one we've been using for the last several tutorials.
+
+4. <mark>To-do:</mark> __Compute climate index on each dataset__. We want a list, where each item in the list is the climate index timeseries for a given model. Here's my solution:
+```python
+## empty list to hold result
+T2m_idx = []
+
+## loop through each (model, filepath) pair
+for model, fp in fp_dict.items():
+
+    ## get file pattern
+    file_pattern = os.path.join(fp, "*.nc")
+
+    ## open dataset and append to list
+    T2m_idx.append(
+        xr.open_mfdataset(
+            os.path.join(fp, "*.nc"),
+            use_cftime=True,
+            mask_and_scale=False,
+            preprocess=WH_index,
+        )["tas"]
+    )
+```
+
+5. <mark>To-do:</mark> __Convert the list ```T2m_idx``` into a single ```xr.DataArray```__ and load it into memory. Before using ```xr.concat``` to concatenate the items in the list, we need to make sure their ```"year"``` coordinate matches, so we'll start by writing a function which resets the year for each dataset to start in 1850. My solution is here:
+```python
+def reset_year(T2m):
+    """Function to reset year to start at 1850"""
+
+    ## get new time index
+    updated_year = np.arange(1850, 1850 + len(T2m.year))
+
+    ## add to array
+    T2m["year"] = updated_year
+
+    return T2m
+
+
+## concatenate in dataset
+T2m_idx = [reset_year(x) for x in T2m_idx]
+T2m_idx = xr.concat(T2m_idx, dim=pd.Index(models, name="model"), coords="minimal")
+
+## Drop unnecessary coordinates
+T2m_idx = T2m_idx.drop_vars(["height", "lon", "lat"])
+
+## Load into memory
+start = time.time()
+T2m_idx.load()
+end = time.time()
+print(end - start)
+```
+
+6. __Get a normalized version of the data__, called ```T2m_idx_norm```, to make it easier to compare datasets (basically, remove the bias). We'll do this by subtracting the mean of the first 30 years for each model. My solution is:
+```python
+## normalize by removing mean of first 30 years
+T2m_idx_baseline = T2m_idx.isel(year=slice(None, 30)).mean("year")
+T2m_idx_norm = T2m_idx - T2m_idx_baseline
+```
+
+7. __Plot the result__, two different ways. First, plot the non-normalized index for each dataset. Then, plot the normalized dataset and ensemble mean. Here's my solution:
+```python
+fig, axs = plt.subplots(1, 2, figsize=(8, 3))
+
+## first, plot the raw data; then, plot the normalized data
+for i, data in enumerate([T2m_idx, T2m_idx_norm]):
+
+    ## loop through each model
+    for model in data.model:
+
+        axs[i].plot(data.year, data.sel(model=model), label=model.item(), lw=1)
+
+## plot ensemble mean
+axs[1].plot(data.year, data.mean("model"), label="mean", lw=2, c="k")
+axs[1].set_xlim([None, 1999])
+
+## add legend
+axs[1].legend(prop={"size": 8})
 
 plt.show()
 ```
