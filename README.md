@@ -3,6 +3,11 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 
 <sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
+## 7/18 updates
+- ~~We'll look at large ensembles today, using the following notebook: [scripts/2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)~~
+- Here's a link to the (new) notebook we'll use today: [scripts/whoi_mip.ipynb](scripts/whoi_mip.ipynb). In this notebook we'll compare Woods Hole 2m-temperature simulations in the "1pctCO2" scenario of a few CMIP models.
+
+
 ## 7/17 updates
 - Here's a link to the (new) notebook we'll use today: [scripts/1.5_detection_tutorial.ipynb](scripts/1.5_detection_tutorial.ipynb). In this notebook we'll compare Woods Hole 2m-temperature between pre-industrial control and historical simulations
 - We'll look at large ensembles tomorrow, using the following notebook: [scripts/2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
@@ -25,8 +30,8 @@ Date | Topic | Notebook
 7/10 | Pre-processing using [```xarray```](https://docs.xarray.dev/en/stable/)  | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
 7/11 | Defining a climate index | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
 7/16 | Climate model validation | [1_model_validation_tutorial.ipynb](scripts/1_model_validation_tutorial.ipynb)
-7/17 | Detecting climate change using models (1/2)  | [1.5_detection_tutorial.ipynb](scripts/1.5_detection_tutorial.ipynb)
-7/18 | Detecting climate change using models (2/2)  | [2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
+7/17 | Detecting climate change using models  | [1.5_detection_tutorial.ipynb](scripts/1.5_detection_tutorial.ipynb)
+7/18 | Model intercomparison using WHOI's servers  | [whoi_mip.ipynb](scripts/whoi_mip.ipynb)
 
 <sup>*</sup>CMIP = Coupled Model Intercomparison Project   
 

@@ -2,7 +2,7 @@
 - [Thu, Jul 11: defining a climate index](#Thursday,-Jul-11:-defining-a-climate-index)
 - [Tue, Jul 16: model validation](#Tuesday,-Jul-16:-model-validation)
 - [Wed, Jul 17: climate change detection](#Wed,-Jul-17:-Climate-change-detection-(1/2))
-- [Thu, Jul 18: WHOI model inter-comparison](#Thu,-Jul-18:-WHOI-model-intercomparison)
+- [Thu, Jul 18: WHOI model inter-comparison](#Thu,-Jul-18:-WHOI-model-inter-comparison)
 
 # Thursday, Jul 11: defining a climate index
 
@@ -353,7 +353,7 @@ plt.show()
 ## Thu, Jul 18: WHOI model inter-comparison
 Items that need to be completed for the code to run are marked with <mark>To-do</mark>.
 
-1. __Preliminaries__: run "Google Colab" and ""import" cells.
+1. __Preliminaries__: run "Google Colab" and "import" cells.
 
 2. <mark>To-do:</mark> __Set filepaths.__
 
