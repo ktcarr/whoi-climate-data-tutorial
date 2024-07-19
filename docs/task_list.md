@@ -21,7 +21,7 @@ Part 3: [Compute a climate index (monthly temperature anomaly in Woods Hole)](#P
 </p>
 
 ## Part 1: Setting filepaths and importing packages
-1. __Open the [0_xarray_tutorial.ipynb](../scripts/0_xarray_tutorial.ipynb) notebook__. You can do this using your own virtual environment or in the cloud using Google Colab (see [instructions for Colab](#Google-Colab-instructions)).
+1. __Open the [woodshole_climate_index.ipynb](../scripts/tutorials/woodshole_climate_index.ipynb) notebook__. You can do this using your own virtual environment or in the cloud using Google Colab (see [instructions for Colab](#Google-Colab-instructions)).
 2. __Run the 1<sup>st</sup> code cell__ (under the header "Check if we're running in Google Colab"):
 ```python
 try:
@@ -50,17 +50,13 @@ else:
     era5_t2m_path = ...
 ```
 
-3b. (optional) Update the other filepaths in the 2<sup>nd</sup> code cell, ```era5_slp_path``` and ```miroc6_path```. This will allow you to run all of the code in the notebook (e.g., illustrating correlation between variables and regridding), but isn't necessary for today's goal.
-
 4. __Run the 2<sup>nd</sup> code cell__ (filepaths, from above)  and __3<sup>rd</sup> code cell__ (package imports)
 
-5. (optional) Run the rest of the code in the notebook.
-
 ### Part 2: Open the data
-6. Scroll down to the end of the notebook, and __create a new code cell__.
-7. __Get the "pattern" of filenames in the ERA5 dataset__ (there's one file per year). One way to do this is ```file_pattern = os.path.join(era5_t2m_path, "*.nc")```. This pattern will match any files in the ERA5 folder which end in ```.nc``` (file extension for NetCDF files).  To check this worked, you can print out a list of matched files with ```glob.glob(file_pattern)```.
-8. __Open the dataset__, with ```t2m = xr.open_mfdataset(file_pattern)["t2m"]```.
-9. __Plot the first timestep__, with ```plt.contourf(t2m.longitude, t2m.latitude, t2m.isel(time=0))```
+5. Scroll down to the end of the notebook, and __create a new code cell__.
+6. __Get the "pattern" of filenames in the ERA5 dataset__ (there's one file per year). One way to do this is ```file_pattern = os.path.join(era5_t2m_path, "*.nc")```. This pattern will match any files in the ERA5 folder which end in ```.nc``` (file extension for NetCDF files).  To check this worked, you can print out a list of matched files with ```glob.glob(file_pattern)```.
+7. __Open the dataset__, with ```t2m = xr.open_mfdataset(file_pattern)["t2m"]```.
+8. __Plot the first timestep__, with ```plt.contourf(t2m.longitude, t2m.latitude, t2m.isel(time=0))```
 
 
 ### Part 3: Defining the index
@@ -103,7 +99,7 @@ Part 4: [Plot the bias](#Part-4-Plot-the-bias)
 
 
 ## Part 1: Setting filepaths
-1. __Open the [1_model_validation_tutorial.ipynb](../scripts/1_model_validation_tutorial.ipynb) notebook__. You can do this using your own virtual environment or in the cloud using Google Colab (see [instructions for Colab](#Google-Colab-instructions)).
+1. __Open the [model_validation.ipynb](../scripts/tutorials/model_validation.ipynb) notebook__. You can do this using your own virtual environment or in the cloud using Google Colab (see [instructions for Colab](#Google-Colab-instructions)).
 2. __Run the 1<sup>st</sup> code cell__ (under the header "Check if we're running in Google Colab"):
 ```python
 try:
@@ -134,18 +130,14 @@ else:
     cesm_t2m_path = ...
 ```
 
-3b. (optional) Update the other filepaths in the 2<sup>nd</sup> code cell, ```oras_path``` and ```cesm_zos_path```. This will allow you to run all of the code in the notebook (e.g., comparing Gulf Stream position in the ORAS5 reanalysis and the CESM2 climate model), but isn't necessary for today's goal.
-
 4. __Run the 2<sup>nd</sup> code cell__ (filepaths, from above)  and __3<sup>rd</sup> code cell__ (package imports)
 
-5. (optional) Run the rest of the code in the notebook.
-
 ### Part 2: Open data
-6. Scroll down to the end of the notebook, and __create a new code cell__.
+5. Scroll down to the end of the notebook, and __create a new code cell__.
 
-7. __Open the ERA5 data__. Recall from the previous tutorial that each year of data is saved in a separate file. Therefore, start by getting the "file pattern" with ```file_pattern = os.path.join(era5_t2m_path,"*.nc")```. Next, open the data with ```T2m_era = xr.open_mfdataset(file_pattern)["t2m"]```.
+6. __Open the ERA5 data__. Recall from the previous tutorial that each year of data is saved in a separate file. Therefore, start by getting the "file pattern" with ```file_pattern = os.path.join(era5_t2m_path,"*.nc")```. Next, open the data with ```T2m_era = xr.open_mfdataset(file_pattern)["t2m"]```.
 
-8. __Open the CESM2 data__. The CESM2 data is all contained with a single file called ```tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc```. To open it, combine the filepath and filename with:
+7. __Open the CESM2 data__. The CESM2 data is all contained with a single file called ```tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc```. To open it, combine the filepath and filename with:
 ```python
 cesm_fname = "tas_Amon_CESM2_historical_r1i1p1f1_gn_185001-201412.nc"
 cesm_t2m_path_full = os.path.join(cesm_t2m_path, cesm_fname)
@@ -153,20 +145,20 @@ T2m_cesm = xr.open_dataset(cesm_t2m_path_full)["tas"]
 ```
 
 ### Part 3: Subset data in time and space
-9. __Subset both datasets in time for the overlapping period__ (1979–2014). To do this, define a "time_range" object, ```time_range=["1979","2014"]```, and select the range for both datasets:
+8. __Subset both datasets in time for the overlapping period__ (1979–2014). To do this, define a "time_range" object, ```time_range=["1979","2014"]```, and select the range for both datasets:
 ```python
 T2m_era = T2m_era.sel(time=slice(*time_range))
 T2m_cesm = T2m_cesm.sel(time=slice(*time_range))
 ```
 
-10. __Subset the CESM2 data in space__, trimming to the North Atlantic. Subset for the longitude range ```lon_range = [258, 318]``` and the latitude range ```lat_range = [20, 60]```. Do the actual subsetting with ```T2m_cesm = T2m_cesm.sel(lon=slice(*lon_range), lat=slice(*lat_range))```
+9. __Subset the CESM2 data in space__, trimming to the North Atlantic. Subset for the longitude range ```lon_range = [258, 318]``` and the latitude range ```lat_range = [20, 60]```. Do the actual subsetting with ```T2m_cesm = T2m_cesm.sel(lon=slice(*lon_range), lat=slice(*lat_range))```
 
-11. __Regrid the ERA5 data to match the (trimmed) CESM2 data__. First, let's rename ERA5's spatial coordinates from "longitude" and "latitude" to "lon" and "lat" (to match CESM2): ```T2m_era = T2m_era.rename({"latitude":"lat","longitude":"lon"})```. Then, interpolate the ERA5 data onto the CESM2 grid with: ```T2m_era = T2m_era.interp({"lat":T2m_cesm.lat, "lon":T2m_cesm.lon})```.
+10. __Regrid the ERA5 data to match the (trimmed) CESM2 data__. First, let's rename ERA5's spatial coordinates from "longitude" and "latitude" to "lon" and "lat" (to match CESM2): ```T2m_era = T2m_era.rename({"latitude":"lat","longitude":"lon"})```. Then, interpolate the ERA5 data onto the CESM2 grid with: ```T2m_era = T2m_era.interp({"lat":T2m_cesm.lat, "lon":T2m_cesm.lon})```.
 
 #### Part 4: Plot the bias
-10. __Compute the bias__, defined here as the difference between the mean states: ```bias = T2m_cesm.mean("time") - T2m_era.mean("time")```.
+11. __Compute the bias__, defined here as the difference between the mean states: ```bias = T2m_cesm.mean("time") - T2m_era.mean("time")```.
 
-11. __Plot the bias__, using the following code:
+12. __Plot the bias__, using the following code:
 ```python
 ## Blank canvas for plotting
 fig = plt.figure(figsize=(7,4))
@@ -200,7 +192,7 @@ plt.show()
 ```
 
 # Wed, Jul 17: Climate change detection
-In this tutorial, most of the code is already written – we'll fill in the important parts (labeled with "<mark>To-do</mark>"s in the accompanying notebook, [1.5_detection_tutorial.ipynb](../scripts/1.5_detection_tutorial.ipynb)). Below are detailed instructions for how to complete the <mark>To-do</mark>s and run the entire notebook (note: if the "<mark>To-do</mark>"s aren't completed in the notebook, the code will not run).
+In this tutorial, most of the code is already written – we'll fill in the important parts (labeled with "<mark>To-do</mark>"s in the accompanying notebook, [climate_change_detection.ipynb](../scripts/tutorials/climate_change_detection.ipynb)). Below are detailed instructions for how to complete the <mark>To-do</mark>s and run the entire notebook (note: if the "<mark>To-do</mark>"s aren't completed in the notebook, the code will not run).
 
 ## Overview:
 Part 1. [Set filepaths and import packages](#Part-1-Set-filepaths)  
@@ -217,7 +209,7 @@ Part 4: [Make a histogram](#Part-4-Make-a-histogram)
 </p>
 
 ## Part 1: Set filepaths
-1. __Open the [1.5_detection_tutorial.ipynb](../scripts/1.5_detection_tutorial.ipynb) notebook__. You can do this using your own virtual environment or in the cloud using Google Colab (see [instructions for Colab](#Google-Colab-instructions)).
+1. __Open the [climate_change_detection.ipynb](../scripts/tutorials/climate_change_detection.ipynb) notebook__. You can do this using your own virtual environment or in the cloud using Google Colab (see [instructions for Colab](#Google-Colab-instructions)).
 2. __Run the 1<sup>st</sup> code cell__ (under the header "Check if we're running in Google Colab"):
 ```python
 try:
@@ -358,7 +350,7 @@ Items that need to be completed for the code to run are marked with <mark>To-do<
  <img src="../readme_figs/task_list_1pctCO2.png" width=600" />
 </p>
 
-0. __Open the [whoi_mip.ipynb](../scripts/whoi_mip.ipynb) notebook__.
+0. __Open the [model_intercomparison.ipynb](../scripts/tutorials/model_intercomparison.ipynb) notebook__.
 
 1. __Preliminaries__: run "Google Colab" and "import" cells.
 
