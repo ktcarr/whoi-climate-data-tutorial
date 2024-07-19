@@ -314,7 +314,7 @@ def get_sample_means(data, nsamples, nyears=30):
 
 7. <mark>To-do</mark>: Finally, __draw 3,000 random samples__ from the pre-industrial control output. For example,
 ```python
-sample_means = get_sample_means(data=T2m_pico, nsamples=3000)
+sample_means = get_sample_means(data=T2m_WH_pico, nsamples=3000)
 ```
 
 ## Part 4: Make a histogram 
