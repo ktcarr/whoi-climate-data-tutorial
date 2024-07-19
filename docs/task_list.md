@@ -1,5 +1,5 @@
 # Table of contents
-- [Thu, Jul 11: defining a climate index](#Thursday,-Jul-11:-defining-a-climate-index)
+- [Thu, Jul 11: defining a climate index](#Thursday-Jul-11-defining-a-climate-index)
 - [Tue, Jul 16: model validation](#Tuesday,-Jul-16:-model-validation)
 - [Wed, Jul 17: climate change detection](#Wed,-Jul-17:-Climate-change-detection-(1/2))
 - [Thu, Jul 18: WHOI model inter-comparison](#Thu,-Jul-18:-WHOI-model-inter-comparison)
