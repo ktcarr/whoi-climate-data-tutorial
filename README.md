@@ -1,5 +1,5 @@
 # Climate data analysis @ WHOI: a tutorial
-The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data stored on WHOI's servers using python. The tutorial is designed to take place over ~6 hour-long sessions, and is designed to cover four topics: (1) data pre-processing, (2) model validation, (3) using pre-industrial control runs to detect a climate change signal, and (4) model intercomparison. In addition to the [tutorials](scripts/tutorials) we've provided several additional [examples](scripts/examples) which illustrate the use of large ensembles and paleo-proxies, for example. Below, you will find [recent announcements](#718-updates), a [description of the individual tutorial sessions](#Outline-for-summer-2024-tutorial) and [other examples](#Description-of-other-examples), [setup instructions](#Setup), an [overview of the project structure](#Description-of-high-level-folders--files), and [other potentially useful links](#Other-potentially-useful-links). Before going into these details, here's a preview:
+The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data stored on WHOI's servers using python. The tutorial is designed to take place over ~6 hour-long sessions, and is designed to cover four topics: (1) data pre-processing, (2) model validation, (3) using pre-industrial control runs to detect a climate change signal, and (4) model intercomparison. In addition to the [tutorials](scripts/tutorials) we've provided several additional [examples](scripts/examples) which illustrate the use of large ensembles and paleo-proxies, for example. Below, you will find [recent announcements](#71924-updates), a [description of the individual tutorial sessions](#Outline-for-summer-2024-tutorial) and [other examples](#Description-of-other-examples), [setup instructions](#Setup), an [overview of the project structure](#Description-of-high-level-folders--files), and [other potentially useful links](#Other-potentially-useful-links). Before going into these details, here's a preview:
 
 ### Pre-processing with ```xarray```
 from [xarray_reference.ipynb](scripts/xarray_reference.ipynb)
@@ -36,25 +36,10 @@ __1,000-member toy model ensemble__ (fig. from ([stochastic_large_ensemble.ipynb
  <img src="./readme_figs/ensemble_mean.png" width="350" />
 </p>
 
-## 7/18 updates
-- ~~We'll look at large ensembles today, using the following notebook: [scripts/2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)~~
-- Here's a link to the (new) notebook we'll use today: [scripts/whoi_mip.ipynb](scripts/whoi_mip.ipynb). We'll compare Woods Hole 2m-temperature simulations in the "1pctCO2" scenario of a few CMIP models. See the [Task List](docs/task_list.md) for solutions to the "<mark>To-do</mark>"s in the notebook.
-
-
-## 7/17 updates
-- Here's a link to the (new) notebook we'll use today: [scripts/1.5_detection_tutorial.ipynb](scripts/1.5_detection_tutorial.ipynb). In this notebook we'll compare Woods Hole 2m-temperature between pre-industrial control and historical simulations
-- We'll look at large ensembles tomorrow, using the following notebook: [scripts/2_cmip_tutorial.ipynb](scripts/2_cmip_tutorial.ipynb)
-
-## 7/16 updates
-- See the [results](results) folder to see the output of running the each of the tutorial notebooks. For example, to see the output of scripts/0_xarray_tutorial.ipynb, navigate to the folder [results/0_xarray_tutorial](results/0_xarray_tutorial) and open the markdown file [0_xarray_tutorial.md](results/0_xarray_tutorial/0_xarray_tutorial.md).
-- See the [FAQ](docs/FAQ.md) page for a possible solution to the "NetCDF: HDF error" that many people have been getting when trying to open data from the CMIP6 server
-
-## 7/11 updates
-- See the [task list](docs/task_list.md) for a list of checkpoints for each [tutorial](scripts/tutorials).
-- *"How should I use the tutorial notebooks?"* The notebooks are structured into three parts: filepaths / imports, examples, and "To-do"s. To use the notebooks:
-    1. (__required__) Update and execute the code cells with filepaths / imports.
-    2. (__optional__) Run the code in the examples section (everything between imports and "To-dos")
-    3. Complete the "To-do"s at the end of the notebook (see [Task List](docs/task_list.md) for detailed checkpoints)
+## 7/19/24 updates
+- The project structure (including filenames) has changed since the last tutorial! The [outline below](#Outline-for-summer-2024-tutorial) contains links to notebooks that we went through together in class. 
+- Rendered results from the tutorial notebooks can be found in the [results](results) folder. To see the results for a given notebook, click through to the folder with the notebook's name, then open the markdown (".md") file inside.
+- See [below](#Other-potentially-useful-links) for links to (i) the CMIP6 overview paper and (ii) CMIP naming conventions
 
 ## Outline for summer 2024 tutorial
 Date | Topic | Notebook
@@ -64,7 +49,9 @@ Date | Topic | Notebook
 7/11/24 | Defining a climate index | [woodshole_climate_index.ipynb](scripts/tutorials/woodshole_climate_index.ipynb)
 7/16/24 | Climate model validation | [model_validation.ipynb](scripts/tutorials/model_validation.ipynb)
 7/17/24 | Detecting climate change using models  | [climate_change_detection.ipynb](scripts/tutorials/climate_change_detection.ipynb)
-7/18/24 | Model intercomparison using WHOI's servers  | [model_intercomparison.ipynb](scripts/tutorials/model_intercomparison.ipynb)
+7/18/24 | Model intercomparison using WHOI's servers  | [model_intercomparison.ipynb](scripts/tutorials/model_intercomparison.ipynb)  
+
+__Note__: see [the task list](docs/task_list.md) for detailed instructions on how to run the tutorial notebooks from 7/11 - 7/18
 
 <sup>*</sup>CMIP = Coupled Model Intercomparison Project   
 
@@ -139,7 +126,8 @@ Folder/file | Description
 ```.gitignore``` | list of files and extensions ```git``` should ignore
 
 ## Other potentially useful links
-- A guide for how to organize research code for non-computer scientists: [The Good Research Code Handbook](https://goodresearch.dev/index.html).
+- [The Good Research Code Handbook](https://goodresearch.dev/index.html) (A guide for how to organize research code for non-computer scientists)
 - [Description of CMIP naming conventions, including variant ID](https://wcrp-cmip.org/cmip-data-access/)
+- [CMIP6 overview paper](https://gmd.copernicus.org/articles/9/1937/2016/gmd-9-1937-2016.pdf)
 
 
