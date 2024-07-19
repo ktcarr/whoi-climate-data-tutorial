@@ -17,23 +17,32 @@ The purpose of this tutorial is to provide practical guidance on how to analyze 
 - See the [FAQ](docs/FAQ.md) page for a possible solution to the "NetCDF: HDF error" that many people have been getting when trying to open data from the CMIP6 server
 
 ## 7/11 updates
-- See the [Task List](docs/task_list.md) for a list of checkpoints for each tutorial.
+- See the [task list](docs/task_list.md) for a list of checkpoints for each [tutorial](scripts/tutorials).
 - *"How should I use the tutorial notebooks?"* The notebooks are structured into three parts: filepaths / imports, examples, and "To-do"s. To use the notebooks:
     1. (__required__) Update and execute the code cells with filepaths / imports.
     2. (__optional__) Run the code in the examples section (everything between imports and "To-dos")
     3. Complete the "To-do"s at the end of the notebook (see [Task List](docs/task_list.md) for detailed checkpoints)
 
-## Outline
+## Outline for Summer 2024 tutorial
 Date | Topic | Notebook
 -- | -- | --
-7/9 | Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
-7/10 | Pre-processing using [```xarray```](https://docs.xarray.dev/en/stable/)  | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
-7/11 | Defining a climate index | [0_xarray_tutorial.ipynb](scripts/0_xarray_tutorial.ipynb)
-7/16 | Climate model validation | [1_model_validation_tutorial.ipynb](scripts/1_model_validation_tutorial.ipynb)
-7/17 | Detecting climate change using models  | [1.5_detection_tutorial.ipynb](scripts/1.5_detection_tutorial.ipynb)
-7/18 | Model intercomparison using WHOI's servers  | [whoi_mip.ipynb](scripts/whoi_mip.ipynb)
+7/9/24 | Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
+7/10/24 | Pre-processing using [```xarray```](https://docs.xarray.dev/en/stable/)  | [xarray_reference.ipynb](scripts/xarray_reference.ipynb)
+7/11/24 | Defining a climate index | [woodshole_climate_index.ipynb](scripts/tutorials/woodshole_climate_index.ipynb)
+7/16/24 | Climate model validation | [model_validation.ipynb](scripts/tutorials/model_validation.ipynb)
+7/17/24 | Detecting climate change using models  | [climate_change_detection.ipynb](scripts/tutorials/climate_change_detection.ipynb)
+7/18/24 | Model intercomparison using WHOI's servers  | [model_intercomparison.ipynb](scripts/tutorials/model_intercomparison.ipynb)
 
 <sup>*</sup>CMIP = Coupled Model Intercomparison Project   
+
+## Other examples
+Topic | Notebook
+-- | --
+Validating 2m-temperature and Gulf Stream position in CESM2 | [T2m_and_gulfstream_validation.ipynb](scripts/examples/T2m_and_gulfstream_validation.ipynb)
+Detecting climate change in a stochastic model | [stochastic_large_ensemble.ipynb](scripts/examples/stochastic_large_ensemble.ipynb)
+Reproducing results from [a recent Nature Geoscience paper](https://www.nature.com/articles/s41561-022-00971-w)<sup>1</sup>| [azores.ipynb](scripts/examples/azores.ipynb)
+
+<sup>1</sup>Cresswell-Clay, N. et al. "Twentieth-century Azores High expansion unprecedented in the past 1,200 years". *Nat. Geosci.* 15, 548–553 (2022).
 
 ## Set up
 
@@ -87,24 +96,30 @@ __For other (CMIP6) model output__:
 ## Description of high-level folders & files:
 Folder/file | Description
 -- | --
-```scripts``` | contains ```.ipynb``` notebooks used in tutorial
-```src``` | custom module containing functions used in the tutorials
+```scripts/tutorials``` | contains jupyter notebooks used in tutorial
+```scripts/examples``` | contains other examples of topics covered in the tutorial
+```results``` | contains .md files with rendered output from tutorials and examples
+```docs``` | contains FAQ and detailed instructions for completing tutorials
+```src``` | custom module containing functions used in examples
 ```setup.py``` | file needed to import ```src``` module 
-```environment.yml``` | list of packages needed for tutorial
+```environment*.yml``` | files containing list of packages needed for tutorial
 ```.gitignore``` | list of files and extensions ```git``` should ignore
 
 ## A preview:
 ### 1. Pre-processing: detrending and correlation
+(from [xarray_reference.ipynb](scripts/xarray_reference.ipynb))
 <p float="left">
  <img src="./readme_figs/wh_corr.png" width="400" />
 </p>
 
 ### 2. Model validation: Gulf Stream in ORAS5 and CESM2
+(from [T2m_and_gulfstream_validation.ipynb](scripts/examples/T2m_and_gulfstream_validation.ipynb))
 <p float="left">
  <img src="./readme_figs/gulf_stream_comparison.png" width="500" />
 </p>
 
 ### 3. Climate change assessment (toy stochastic model)
+from ([stochastic_large_ensemble.ipynb](scripts/examples/stochastic_large_ensemble.ipynb))
 <p float="left">
  <img src="./readme_figs/ensemble_mean.png" width="350" />
 </p>
