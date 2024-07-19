@@ -1,15 +1,15 @@
 # Table of contents
 - [Thu, Jul 11: defining a climate index](#Thursday-Jul-11-defining-a-climate-index)
-- [Tue, Jul 16: model validation](#Tuesday,-Jul-16:-model-validation)
-- [Wed, Jul 17: climate change detection](#Wed,-Jul-17:-Climate-change-detection-(1/2))
-- [Thu, Jul 18: WHOI model inter-comparison](#Thu,-Jul-18:-WHOI-model-inter-comparison)
+- [Tue, Jul 16: model validation](#Tuesday-Jul-16-model-validation)
+- [Wed, Jul 17: climate change detection](#Wed-Jul-17-Climate-change-detection)
+- [Thu, Jul 18: WHOI model inter-comparison](#Thu-Jul-18-WHOI-model-inter-comparison)
 
 # Thursday, Jul 11: defining a climate index
 
 ## Overview:
-Part 1. [Set filepaths and import packages](#Part-1:-Setting-filepaths-and-importing-packages)  
-Part 2: [Open the ERA5 temperature data](#Part-2:-Open-the-data)  
-Part 3: [Compute a climate index (monthly temperature anomaly in Woods Hole)](#Part-3:-Defining-the-index)
+Part 1. [Set filepaths and import packages](#Part-1-Setting-filepaths-and-importing-packages)  
+Part 2: [Open the ERA5 temperature data](#Part-2-Open-the-data)  
+Part 3: [Compute a climate index (monthly temperature anomaly in Woods Hole)](#Part-3-Defining-the-index)
 
 ## Goal figures:
 <p float="left">
@@ -91,10 +91,10 @@ climate_index = t2m_WH.groupby("time.month") - t2m_WH_monthly_avg
 # Tuesday, Jul 16: model validation
 
 ## Overview:
-Part 1. [Set filepaths and import packages](#Part-1:-Setting-filepaths)  
-Part 2: [Open the data](#Part-2:-Open-data)  
-Part 3: [Subset data in time and space](#Part-3:-Subset-data-in-time-and-space)  
-Part 4: [Plot the bias](#Part-4:-Plot-the-bias)
+Part 1. [Set filepaths and import packages](#Part-1-Setting-filepaths)  
+Part 2: [Open the data](#Part-2-Open-data)  
+Part 3: [Subset data in time and space](#Part-3-Subset-data-in-time-and-space)  
+Part 4: [Plot the bias](#Part-4-Plot-the-bias)
 
 ## Goal figures:
 <p float="left">
@@ -199,14 +199,14 @@ ax.set_title("Bias")
 plt.show()
 ```
 
-# Wed, Jul 17: Climate change detection (1/2)
+# Wed, Jul 17: Climate change detection
 In this tutorial, most of the code is already written – we'll fill in the important parts (labeled with "<mark>To-do</mark>"s in the accompanying notebook, [1.5_detection_tutorial.ipynb](../scripts/1.5_detection_tutorial.ipynb)). Below are detailed instructions for how to complete the <mark>To-do</mark>s and run the entire notebook (note: if the "<mark>To-do</mark>"s aren't completed in the notebook, the code will not run).
 
 ## Overview:
-Part 1. [Set filepaths and import packages](#Part-1:-Set-filepaths)  
-Part 2: [Open the CESM data](#Part-2:-Open-CESM-data-and-compute-index)  
-Part 3: [Draw random samples from PI-control](#Part-3:-Draw-random-samples-from-PI-control)  
-Part 4: [Make a histogram](#Part-4:-Make-a-histogram)
+Part 1. [Set filepaths and import packages](#Part-1-Set-filepaths)  
+Part 2: [Open the CESM data](#Part-2-Open-CESM-data-and-compute-index)  
+Part 3: [Draw random samples from PI-control](#Part-3-Draw-random-samples-from-PI-control)  
+Part 4: [Make a histogram](#Part-4-Make-a-histogram)
 
 ## Goal figures:
 <p float="left">
