@@ -1,5 +1,5 @@
 # Climate data analysis @ WHOI: a tutorial
-The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data stored on WHOI's servers using python. The tutorial is designed to take place over ~6 hour-long sessions, and is designed to cover four topics: (1) data pre-processing, (2) model validation, (3) using pre-industrial control runs to detect a climate change signal, and (4) model intercomparison. In addition to the [tutorials](scripts/tutorials) we've provided several additional [examples](scripts/examples) which illustrate the use of large ensembles and paleo-proxies, for example. Below, you will find [recent announcements](#7/18-updates), a [description of the individual tutorial sessions](#Outline-for-Summer-2024-tutorial) and [other examples](#Description-of-other-examples), [setup instructions](#Setup), an [overview of the project structure](#Description-of-high-level-folders--files), and [other potentially useful links](#Other-potentially-useful-links). Before going into these details, here's a preview:
+The purpose of this tutorial is to provide practical guidance on how to analyze gridded climate data stored on WHOI's servers using python. The tutorial is designed to take place over ~6 hour-long sessions, and is designed to cover four topics: (1) data pre-processing, (2) model validation, (3) using pre-industrial control runs to detect a climate change signal, and (4) model intercomparison. In addition to the [tutorials](scripts/tutorials) we've provided several additional [examples](scripts/examples) which illustrate the use of large ensembles and paleo-proxies, for example. Below, you will find [recent announcements](#718-updates), a [description of the individual tutorial sessions](#Outline-for-summer-2024-tutorial) and [other examples](#Description-of-other-examples), [setup instructions](#Setup), an [overview of the project structure](#Description-of-high-level-folders--files), and [other potentially useful links](#Other-potentially-useful-links). Before going into these details, here's a preview:
 
 ### Pre-processing with ```xarray```
 from [xarray_reference.ipynb](scripts/xarray_reference.ipynb)
@@ -56,7 +56,7 @@ __1,000-member toy model ensemble__ (fig. from ([stochastic_large_ensemble.ipynb
     2. (__optional__) Run the code in the examples section (everything between imports and "To-dos")
     3. Complete the "To-do"s at the end of the notebook (see [Task List](docs/task_list.md) for detailed checkpoints)
 
-## Outline for Summer 2024 tutorial
+## Outline for summer 2024 tutorial
 Date | Topic | Notebook
 -- | -- | --
 7/9/24 | Connecting to the [CMIP5](cmip5.whoi.edu)<sup>*</sup> and [CMIP6](cmip6.whoi.edu) data servers | N/A (see instructions [below](#Accessing-the-climate-data-servers))
